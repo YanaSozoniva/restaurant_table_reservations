@@ -3,3 +3,6 @@ from reservation.apps import ReservationConfig
 
 app_name = ReservationConfig.name
 
+urlpatterns = [
+
+]

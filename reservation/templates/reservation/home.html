@@ -1,0 +1,158 @@
+{% extends 'reservation/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <!-- Описание ресторана -->
+<section class="row align-items-stretch mb-5">
+    <div class="col-lg-6 position-relative p-4 p-lg-5">
+        <!-- Фоновое изображение -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-cover"
+             style="background-image: url('{% static 'images/backgraund.png.jpg' %}');
+                    background-position: center;
+                    z-index: -1;
+                    border-radius: 0.5rem 0 0 0.5rem;"></div>
+
+        <!-- Затемнение фона для лучшей читаемости -->
+        <div class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-25"
+             style="z-index: -1; border-radius: 0.5rem 0 0 0.5rem;"></div>
+
+        <!-- Контент -->
+        <div class="position-relative text-white h-100 d-flex flex-column justify-content-center">
+            <h1 class="display-4 mb-4">Ресторан "Сладкая жизнь"</h1>
+            <p class="lead">Мы создаем неповторимые сладкие моменты с 2025 года</p>
+            <p>Наш ресторан сочетает в себе уютную атмосферу, высокое качество обслуживания и изысканные десерты, приготовленные по уникальным рецептам.</p>
+            <p>Каждое блюдо в нашем меню - это произведение искусства, созданное с любовью и вниманием к деталям.</p>
+        </div>
+    </div>
+
+    <!-- Галерея изображений -->
+    <div class="col-lg-6">
+        <div class="gallery-grid h-100">
+            <!-- Первый ряд -->
+            <div class="row g-2 mb-2 h-50">
+                <div class="col-6 h-100">
+                    <div class="gallery-item h-100">
+                        <img src="{% static 'images/interior-1.jpg' %}" class="img-fluid rounded h-100 w-100 object-fit-cover" alt="Интерьер">
+                        <div class="overlay">
+                            <span>Зал с витражными окнами</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 h-100">
+                    <div class="gallery-item h-100">
+                        <img src="{% static 'images/interior-2.jpg' %}" class="img-fluid rounded h-100 w-100 object-fit-cover" alt="Интерьер">
+                        <div class="overlay">
+                            <span>Зал Цветущее дерево</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Второй ряд -->
+            <div class="row g-2 h-50">
+                <div class="col-6 h-100">
+                    <div class="gallery-item h-100">
+                        <img src="{% static 'images/interior-3.jpg' %}" class="img-fluid rounded h-100 w-100 object-fit-cover" alt="Интерьер">
+                        <div class="overlay">
+                            <span>Детский зал</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6 h-100">
+                    <div class="gallery-item h-100">
+                        <img src="{% static 'images/interior-4.jpg' %}" class="img-fluid rounded h-100 w-100 object-fit-cover" alt="Интерьер">
+                        <div class="overlay">
+                            <span>Зал для романтических свиданий</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+    .gallery-item:hover {
+        transform: scale(1.03);
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(93, 64, 55, 0.8);
+        color: white;
+        padding: 10px;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+        text-align: center;
+    }
+    .gallery-item:hover .overlay {
+        transform: translateY(0);
+    }
+    .bg-cover {
+        background-size: cover;
+    }
+    .object-fit-cover {
+        object-fit: cover;
+    }
+</style>
+
+    <!-- Услуги -->
+    <section class="py-5 bg-light mb-5">
+        <div class="container">
+            <h2 class="text-center mb-5">Наши услуги</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="bi bi-cake2 fs-1 text-primary mb-3"></i>
+                            <h3 class="h4">Десерты на заказ</h3>
+                            <p>Индивидуальное оформление тортов и пирожных для ваших мероприятий</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="bi bi-calendar-event fs-1 text-primary mb-3"></i>
+                            <h3 class="h4">Организация мероприятий</h3>
+                            <p>Проведение дней рождений, свадеб и корпоративных событий</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <i class="bi bi-basket fs-1 text-primary mb-3"></i>
+                            <h3 class="h4">Доставка</h3>
+                            <p>Быстрая доставка свежих десертов по всему городу</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <!-- Обратная связь -->
+    <section class="bg-light p-5 rounded mb-5">
+        <h2 class="text-center mb-4">Обратная связь</h2>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <form method="post" enctype="multipart/form-data">
+                   <div class="card-body">
+                     {% csrf_token %}
+                       {{ form.as_p }}
+                    </div>
+                    <div class="col-12">
+                            <button class="btn btn-primary px-4 py-2" type="submit">Отправить</button>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

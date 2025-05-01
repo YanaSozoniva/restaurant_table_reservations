@@ -1,7 +1,7 @@
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms import BooleanField
 
 from users.models import User
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 
 class StyleFormMixin:
@@ -17,7 +17,8 @@ class StyleFormMixin:
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
-    """ Форма регистрации пользователя """
+    """Форма регистрации пользователя"""
+
     username = None
 
     class Meta:
@@ -26,9 +27,15 @@ class UserRegisterForm(StyleFormMixin, UserCreationForm):
 
 
 class UserUpdateForm(StyleFormMixin, UserChangeForm):
-    """ Форма изменения профиля пользователя """
+    """Форма изменения профиля пользователя"""
+
     username = None
 
     class Meta:
         model = User
-        fields = ("email", "phone", "avatar", "tg_name", )
+        fields = (
+            "email",
+            "phone",
+            "avatar",
+            "tg_name",
+        )

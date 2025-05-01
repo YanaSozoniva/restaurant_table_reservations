@@ -13,14 +13,31 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <!-- Центрированные ссылки -->
             <ul class="navbar-nav mx-auto">  <!-- mx-auto выравнивает по центру -->
-                <li class="nav-item"><a class="nav-link active" href="#">Главная</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">О ресторане</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Бронирование</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:home' %}">Главная</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="#">О ресторане</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="#">Бронирование</a></li>
             </ul>
 
             <!-- Личный кабинет (справа) -->
             <div class="d-flex ms-lg-auto">  <!-- ms-lg-auto сдвигает вправо -->
-                <a href="#" class="btn btn-outline-light btn-sm">Личный кабинет</a>
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <form method="post" action="{% url 'users:logout' %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav">Выйти</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:user_detail' user.pk %}">Профиль</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:register' %}">Регистрация</a>
+                </li>
+                {% endif %}
             </div>
         </div>
     </div>

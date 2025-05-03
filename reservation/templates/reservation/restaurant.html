@@ -1,0 +1,99 @@
+{% extends 'reservation/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок страницы -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">О ресторане "Сладкая жизнь"</h1>
+        <p class="lead">Узнайте больше о нашем уютном уголке сладких удовольствий</p>
+    </div>
+
+    <!-- История ресторана -->
+    <section class="row align-items-center mb-5">
+        <div class="col-lg-6">
+            <h2 class="mb-4">Наша история</h2>
+            <p>Ресторан "Сладкая жизнь" открыл свои двери в 2025 году с целью создать место, где каждый сможет ощутить настоящую магию десертов.</p>
+            <p>Начав с маленькой кондитерской, мы выросли в полноценный ресторан, сохранив при этом домашнюю атмосферу и любовь к традициям.</p>
+            <p>За эти годы мы разработали более 200 уникальных рецептов и стали любимым местом для ценителей изысканных сладостей.</p>
+        </div>
+        <div class="col-lg-6">
+            <img src="{% static 'images/history.jpg' %}" class="img-fluid rounded shadow" alt="История ресторана">
+        </div>
+    </section>
+
+    <!-- Миссия и ценности -->
+    <section class="bg-light p-5 rounded mb-5">
+        <h2 class="text-center mb-4">Миссия и ценности</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-heart-fill text-danger fs-1 mb-3"></i>
+                        <h3>Качество</h3>
+                        <p>Мы используем только натуральные ингредиенты и готовим с любовью</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-star-fill text-warning fs-1 mb-3"></i>
+                        <h3>Традиции</h3>
+                        <p>Сохраняем рецепты, проверенные временем, и создаем новые шедевры</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill text-primary fs-1 mb-3"></i>
+                        <h3>Гостеприимство</h3>
+                        <p>Каждый гость для нас - особенный, мы создаем атмосферу тепла и уюта</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Наша команда</h2>
+        <div class="row">
+            <!-- Шеф-повар -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/chef.jpg' %}" class="card-img-top" alt="Шеф-повар">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Анна Петрова</h3>
+                        <p class="text-muted">Шеф-кондитер</p>
+                        <p class="card-text">Автор уникальных рецептов, создает сладкие шедевры с 2018 года</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Управляющий -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/manager.jpg' %}" class="card-img-top" alt="Управляющий">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Иван Сидоров</h3>
+                        <p class="text-muted">Управляющий</p>
+                        <p class="card-text">Создает неповторимую атмосферу и следит за безупречным сервисом</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Сомелье -->
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{% static 'images/sommelier.jpg' %}" class="card-img-top" alt="Сомелье">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">Елена Ковалева</h3>
+                        <p class="text-muted">Сомелье</p>
+                        <p class="card-text">Поможет подобрать идеальный напиток к вашему десерту</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+{% endblock %}

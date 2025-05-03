@@ -41,3 +41,8 @@ class HomeViews(TemplateView):
         context['form'] = form
         return self.render_to_response(context)
 
+
+class AboutRestaurantViews(TemplateView):
+    """Контроллер для отображения главной страница сайта"""
+
+    template_name = "reservation/restaurant.html"

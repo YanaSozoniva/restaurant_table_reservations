@@ -14,11 +14,12 @@
             <!-- Центрированные ссылки -->
             <ul class="navbar-nav mx-auto">  <!-- mx-auto выравнивает по центру -->
                 <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:home' %}">Главная</a></li>
-                <li class="btn btn-link nav"><a class="nav-link" href="#">О ресторане</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:restaurant' %}">О ресторане</a></li>
                 <li class="btn btn-link nav"><a class="nav-link" href="#">Бронирование</a></li>
             </ul>
 
             <!-- Личный кабинет (справа) -->
+
             <div class="d-flex ms-lg-auto">  <!-- ms-lg-auto сдвигает вправо -->
                 {% if user.is_authenticated %}
                 <li class="nav-item">

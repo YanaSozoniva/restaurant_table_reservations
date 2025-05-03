@@ -14,6 +14,10 @@ class StyleFormMixin:
                 fild.widget.attrs["class"] = "form-check-input"
             else:
                 fild.widget.attrs["class"] = "form-control"
+            if fild_name == 'phone':
+                fild.widget.attrs.update({
+                    'placeholder': '+7 (XXX) XXX-XX-XX'
+                })
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):

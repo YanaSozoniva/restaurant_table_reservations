@@ -7,7 +7,7 @@
     <div class="col-lg-6 position-relative p-4 p-lg-5">
         <!-- Фоновое изображение -->
         <div class="position-absolute top-0 start-0 w-100 h-100 bg-cover"
-             style="background-image: url('{% static 'images/backgraund.png.jpg' %}');
+             style="background-image: url('{% static 'images/bkg.png' %}');
                     background-position: center;
                     z-index: -1;
                     border-radius: 0.5rem 0 0 0.5rem;"></div>
@@ -17,11 +17,12 @@
              style="z-index: -1; border-radius: 0.5rem 0 0 0.5rem;"></div>
 
         <!-- Контент -->
-        <div class="position-relative text-white h-100 d-flex flex-column justify-content-center">
-            <h1 class="display-4 mb-4">Ресторан "Сладкая жизнь"</h1>
-            <p class="lead">Мы создаем неповторимые сладкие моменты с 2025 года</p>
-            <p>Наш ресторан сочетает в себе уютную атмосферу, высокое качество обслуживания и изысканные десерты, приготовленные по уникальным рецептам.</p>
-            <p>Каждое блюдо в нашем меню - это произведение искусства, созданное с любовью и вниманием к деталям.</p>
+        <div class="position-relative text-white h-100 d-flex flex-column justify-content-center align-items-center text-center">
+            <h1 class="display-4 mb-4 text-outline-thick">Сладкая жизнь</h1>
+            <h5 class="text-outline">Мы создаем неповторимые сладкие моменты с 2025 года</h6>
+            <h5 class="text-outline">Наш ресторан сочетает в себе уютную атмосферу,
+                высокое качество обслуживания и изысканные десерты, приготовленные по уникальным рецептам.</h6>
+            <h5 class="text-outline">Каждое блюдо в нашем меню - это произведение искусства, созданное с любовью и вниманием к деталям.</h5>
         </div>
     </div>
 
@@ -70,38 +71,6 @@
     </div>
 </section>
 
-<style>
-    .gallery-item {
-        position: relative;
-        overflow: hidden;
-        transition: transform 0.3s;
-    }
-    .gallery-item:hover {
-        transform: scale(1.03);
-    }
-    .overlay {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(93, 64, 55, 0.8);
-        color: white;
-        padding: 10px;
-        transform: translateY(100%);
-        transition: transform 0.3s;
-        text-align: center;
-    }
-    .gallery-item:hover .overlay {
-        transform: translateY(0);
-    }
-    .bg-cover {
-        background-size: cover;
-    }
-    .object-fit-cover {
-        object-fit: cover;
-    }
-</style>
-
     <!-- Услуги -->
     <section class="py-5 bg-light mb-5">
         <div class="container">
@@ -138,6 +107,17 @@
         </div>
     </section>
  <!-- Обратная связь -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <section class="bg-light p-5 rounded mb-5">
         <h2 class="text-center mb-4">Обратная связь</h2>
         <div class="row justify-content-center">

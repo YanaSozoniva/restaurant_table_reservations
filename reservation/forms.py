@@ -4,7 +4,7 @@ from django.utils import timezone
 from django import forms
 from django.core.validators import EmailValidator
 from phonenumber_field.formfields import PhoneNumberField
-from reservation.models import Reservation
+from reservation.models import Reservation, Table
 
 from users.forms import StyleFormMixin
 
@@ -40,3 +40,10 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
 
         if time_reservation > time_plus_2h:
             self.add_error("time_reservation", "Бронирование доступно за 2 часа до назначенного часа")
+
+
+class TableForm(StyleFormMixin, forms.ModelForm):
+    """ Форма для создания и редактирования столиков """
+    class Meta:
+        model = Table
+        fields = '__all__'

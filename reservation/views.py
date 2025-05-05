@@ -1,11 +1,12 @@
 from django.shortcuts import redirect
-from django.views.generic import TemplateView, CreateView
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DetailView, DeleteView
 from django.core.mail import send_mail
 from django.contrib import messages
 from config.settings import EMAIL_HOST_USER
 
-from reservation.forms import ContactForm, ReservationForm
-from reservation.models import Reservation
+from reservation.forms import ContactForm, ReservationForm, TableForm
+from reservation.models import Reservation, Table
 
 
 class HomeViews(TemplateView):
@@ -63,3 +64,47 @@ class ReservationCreate(CreateView):
         reservation.customer = user
         reservation.save()
         return super().form_valid(form)
+
+
+class TableList(ListView):
+    """Контроллер вывода списка столов"""
+
+    model = Table
+    template_name = "reservation/table_list.html"
+    context_object_name = "tables"
+
+
+class TableDetail(DetailView):
+    """Контроллер детализации столов"""
+
+    model = Table
+    template_name = "reservation/table_detail.html"
+
+
+class TableCreate(CreateView):
+    """Контроллер создания нового стола"""
+
+    model = Table
+    form_class = TableForm
+    template_name = "reservation/table_form.html"
+    success_url = reverse_lazy("reservation:table_list")
+
+
+class TableUpdate(UpdateView):
+    """Контроллер изменения стола"""
+
+    model = Table
+    form_class = TableForm
+    template_name = "reservation/table_form.html"
+    success_url = reverse_lazy("reservation:table_list")
+
+    def get_success_url(self):
+        return reverse("reservation:table_detail", args=[self.kwargs.get("pk")])
+
+
+class TableDelete(DeleteView):
+    """Контроллер удаления столов"""
+
+    model = Table
+    template_name = "reservation/table_confirm_delete.html"
+    success_url = reverse_lazy("reservation:table_list")

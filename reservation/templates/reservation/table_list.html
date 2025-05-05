@@ -1,0 +1,21 @@
+{% extends 'reservation/base.html' %}
+
+{% block title %}Список столов{% endblock %}
+
+{% block content %}
+
+<p>
+    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'reservation:table_create' %}">Добавить новый стол</a>
+    </div>
+</p>
+<h2>Список столов</h2>
+<ul class="list-group">
+    {% for table in tables %}
+        <li class="list-group-item">
+            <a href="{% url 'reservation:table_detail' table.pk %}">{{ table.table_number }} расположение: {{ table.location }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

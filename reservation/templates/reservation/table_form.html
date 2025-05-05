@@ -1,7 +1,11 @@
 {% extends 'reservation/base.html' %}
 {% block content %}
  <section class="bg-light p-5 rounded mb-5">
-        <h2 class="text-center mb-4">Бронирование </h2>
+        {% if object %}
+             <h2 class="card-text">Редактирование</h2>
+             {% else %}
+             <h2 class="card-text">Создание</h2>
+                {% endif %}
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <form method="post" enctype="multipart/form-data">
@@ -11,17 +15,16 @@
                     </div>
                     <button type="submit" class="btn btn-primary">
                  {% if object %}
-                 Сохранить
+                 Изменить
                  {% else %}
-                 Забронировать
+                 Сохранить
                 {% endif %}
              </button>
-            <a href="{% url 'reservation:home' %}" class="btn btn-secondary">Отмена</a>
+            <a href="{% url 'reservation:table_list' %}" class="btn btn-secondary">Отмена</a>
 
                 </form>
             </div>
         </div>
     </section>
-
 
 {% endblock %}

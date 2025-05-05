@@ -10,15 +10,18 @@ from users.forms import StyleFormMixin
 
 
 class ContactForm(StyleFormMixin, forms.Form):
+    """ Форма обратной связи """
     name = forms.CharField(max_length=100)
     email = forms.EmailField(validators=[EmailValidator()])
     phone = PhoneNumberField(required=False)
     message = forms.CharField(widget=forms.Textarea)
 
 
-class ReservationForm(forms.ModelForm):
-    model = Reservation
-    exclude = ("owner",)
+class ReservationForm(StyleFormMixin, forms.ModelForm):
+    """ Форма нового бронирования """
+    class Meta:
+        model = Reservation
+        exclude = ("customer",)
 
     def clean_date_reservation(self):
         """Валидация проверки даты бронирования столика"""

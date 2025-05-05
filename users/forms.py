@@ -1,5 +1,8 @@
+from datetime import datetime
+
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms import BooleanField
+from django import forms
 
 from users.models import User
 
@@ -9,14 +12,28 @@ class StyleFormMixin:
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for fild_name, fild in self.fields.items():
-            if isinstance(fild, BooleanField):
-                fild.widget.attrs["class"] = "form-check-input"
+        for field_name, field in self.fields.items():
+            if isinstance(field, BooleanField):
+                field.widget.attrs["class"] = "form-check-input"
             else:
-                fild.widget.attrs["class"] = "form-control"
-            if fild_name == 'phone':
-                fild.widget.attrs.update({
+                field.widget.attrs["class"] = "form-control"
+            if field_name == 'phone':
+                field.widget.attrs.update({
                     'placeholder': '+7 (XXX) XXX-XX-XX'
+                })
+            if field_name == 'date_reservation':
+                field.widget = forms.DateInput(attrs={
+                    'type': 'date',
+                    'class': 'form-control datepicker',
+                    'min': datetime.now().strftime('%Y-%m-%d')
+                }, format='%Y-%m-%d')
+            if field_name == 'time_reservation':
+                field.widget = forms.TimeInput(attrs={
+                    'type': 'time',
+                    'class': 'form-control timepicker',
+                    'step': '300',
+                    'min': '10:00',  # Минимальное время
+                    'max': '23:00',  # Максимальное время
                 })
 
 

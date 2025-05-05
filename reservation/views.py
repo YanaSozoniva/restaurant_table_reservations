@@ -1,10 +1,11 @@
 from django.shortcuts import redirect
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, CreateView
 from django.core.mail import send_mail
 from django.contrib import messages
 from config.settings import EMAIL_HOST_USER
 
-from reservation.forms import ContactForm
+from reservation.forms import ContactForm, ReservationForm
+from reservation.models import Reservation
 
 
 class HomeViews(TemplateView):
@@ -46,3 +47,19 @@ class AboutRestaurantViews(TemplateView):
     """Контроллер для отображения главной страница сайта"""
 
     template_name = "reservation/restaurant.html"
+
+
+class ReservationCreate(CreateView):
+    """Контроллер бронирования столика"""
+
+    model = Reservation
+    form_class = ReservationForm
+    template_name = "reservation/reservation_form.html"
+    # success_url = reverse_lazy("mailing:message_list")
+
+    def form_valid(self, form):
+        reservation = form.save()
+        user = self.request.user
+        reservation.customer = user
+        reservation.save()
+        return super().form_valid(form)

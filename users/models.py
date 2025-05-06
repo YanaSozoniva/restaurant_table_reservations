@@ -17,6 +17,7 @@ class User(AbstractUser):
     tg_name = models.CharField(
         max_length=50, verbose_name="Телеграм-ник", null=True, blank=True, help_text="Введите телеграм-ник"
     )
+    token = models.CharField(max_length=100, verbose_name="Token", null=True, blank=True)
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []

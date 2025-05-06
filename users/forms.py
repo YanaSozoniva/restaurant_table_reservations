@@ -1,8 +1,8 @@
 from datetime import datetime
 
+from django import forms
 from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms import BooleanField
-from django import forms
 
 from users.models import User
 
@@ -17,24 +17,27 @@ class StyleFormMixin:
                 field.widget.attrs["class"] = "form-check-input"
             else:
                 field.widget.attrs["class"] = "form-control"
-            if field_name == 'phone':
-                field.widget.attrs.update({
-                    'placeholder': '+7 (XXX) XXX-XX-XX'
-                })
-            if field_name == 'date_reservation':
-                field.widget = forms.DateInput(attrs={
-                    'type': 'date',
-                    'class': 'form-control datepicker',
-                    'min': datetime.now().strftime('%Y-%m-%d')
-                }, format='%Y-%m-%d')
-            if field_name == 'time_reservation':
-                field.widget = forms.TimeInput(attrs={
-                    'type': 'time',
-                    'class': 'form-control timepicker',
-                    'step': '300',
-                    'min': '10:00',  # Минимальное время
-                    'max': '23:00',  # Максимальное время
-                })
+            if field_name == "phone":
+                field.widget.attrs.update({"placeholder": "+7 (XXX) XXX-XX-XX"})
+            if field_name == "date_reservation":
+                field.widget = forms.DateInput(
+                    attrs={
+                        "type": "date",
+                        "class": "form-control datepicker",
+                        "min": datetime.now().strftime("%Y-%m-%d"),
+                    },
+                    format="%Y-%m-%d",
+                )
+            if field_name == "time_reservation":
+                field.widget = forms.TimeInput(
+                    attrs={
+                        "type": "time",
+                        "class": "form-control timepicker",
+                        "step": "300",
+                        "min": "10:00",  # Минимальное время
+                        "max": "23:00",  # Максимальное время
+                    }
+                )
 
 
 class UserRegisterForm(StyleFormMixin, UserCreationForm):
@@ -54,11 +57,4 @@ class UserUpdateForm(StyleFormMixin, UserChangeForm):
 
     class Meta:
         model = User
-        fields = (
-            "email",
-            "phone",
-            "avatar",
-            "tg_name",
-            "last_name",
-            "first_name"
-        )
+        fields = ("email", "phone", "avatar", "tg_name", "last_name", "first_name")

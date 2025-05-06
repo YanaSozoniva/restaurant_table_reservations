@@ -7,12 +7,13 @@
     <h2 class="text-center mb-4">Пользователь: {{ user.email }}</h2>
     <div class="row justify-content-center">
             <div class="col-lg-8">
-                <img class="card-img-top" src="{{ user.avatar | media_filter }}" alt="Card image cap">
+                <img class="card-img-top" src="{{ user.avatar | media_filter }}" alt="Аватар">
                 <p>Телефон: {{ user.phone }}</p>
                 <p>Телеграмм: {{ user.tg_name }}</p>
                 <p>Фамилия: {{ user.last_name }}</p>
                 <p>Имя: {{ user.first_name }}</p>
                 <a href="{% url 'users:user_update' user.pk %}" class="btn btn-primary">Редактировать</a>
+                <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary">История бронирования</a>
             </div>
     </div>
 

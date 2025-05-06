@@ -1,16 +1,17 @@
-from datetime import datetime, date
+from datetime import date
 
-from django.utils import timezone
 from django import forms
 from django.core.validators import EmailValidator
+from django.utils import timezone
 from phonenumber_field.formfields import PhoneNumberField
-from reservation.models import Reservation, Table
 
+from reservation.models import Reservation, Table
 from users.forms import StyleFormMixin
 
 
 class ContactForm(StyleFormMixin, forms.Form):
-    """ Форма обратной связи """
+    """Форма обратной связи"""
+
     name = forms.CharField(max_length=100)
     email = forms.EmailField(validators=[EmailValidator()])
     phone = PhoneNumberField(required=False)
@@ -18,7 +19,8 @@ class ContactForm(StyleFormMixin, forms.Form):
 
 
 class ReservationForm(StyleFormMixin, forms.ModelForm):
-    """ Форма нового бронирования """
+    """Форма нового бронирования"""
+
     class Meta:
         model = Reservation
         exclude = ("customer",)
@@ -34,20 +36,21 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
 
         return date_reservation
 
-    def clean_time_reservation(self):
-        """Валидация проверки время бронирования столика"""
-        time_reservation = self.cleaned_data.get("time_reservation")
-        now = timezone.now()
-        time_plus_2h = (now + timezone.timedelta(hours=2)).time()
-
-        if time_reservation > time_plus_2h:
-            self.add_error("time_reservation", "Бронирование доступно за 2 часа до назначенного часа")
-
-        return time_reservation
+    # def clean_time_reservation(self):
+    #     """Валидация проверки время бронирования столика"""
+    #     time_reservation = self.cleaned_data.get("time_reservation")
+    #     now = timezone.now()
+    #     time_plus_2h = (now + timezone.timedelta(hours=2)).time()
+    #
+    #     if time_reservation < time_plus_2h:
+    #         self.add_error("time_reservation", "Бронирование доступно за 2 часа до назначенного часа")
+    #
+    #     return time_reservation
 
 
 class TableForm(StyleFormMixin, forms.ModelForm):
-    """ Форма для создания и редактирования столиков """
+    """Форма для создания и редактирования столиков"""
+
     class Meta:
         model = Table
-        fields = '__all__'
+        fields = "__all__"

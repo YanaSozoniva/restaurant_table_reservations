@@ -1,7 +1,8 @@
 from django.urls import path
 
 from reservation.apps import ReservationConfig
-from reservation.views import HomeViews, AboutRestaurantViews, ReservationCreate, TableCreate, TableList, TableDetail, TableUpdate, TableDelete, ReservationDetail, ReservationList
+from reservation.views import (AboutRestaurantViews, HomeViews, ReservationCreate, ReservationDetail, ReservationList,
+                               ReservationDelete, TableCreate, TableDelete, TableDetail, TableList, TableUpdate)
 
 app_name = ReservationConfig.name
 
@@ -10,6 +11,7 @@ urlpatterns = [
     path("restaurant/", AboutRestaurantViews.as_view(), name="restaurant"),
     path("reservation/create/", ReservationCreate.as_view(), name="reservation_create"),
     path("reservation/<int:pk>/", ReservationDetail.as_view(), name="reservation_detail"),
+    path("table/<int:pk>/delete/", ReservationDelete.as_view(), name="reservation_delete"),
     path("reservation/", ReservationList.as_view(), name="reservation_list"),
     path("tables/", TableList.as_view(), name="table_list"),
     path("table/<int:pk>/", TableDetail.as_view(), name="table_detail"),

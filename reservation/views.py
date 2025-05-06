@@ -1,10 +1,10 @@
-from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DetailView, DeleteView
-from django.core.mail import send_mail
 from django.contrib import messages
-from config.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+from django.shortcuts import redirect
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
+from config.settings import EMAIL_HOST_USER
 from reservation.forms import ContactForm, ReservationForm, TableForm
 from reservation.models import Reservation, Table
 
@@ -16,13 +16,13 @@ class HomeViews(TemplateView):
     template_name = "reservation/home.html"
 
     def get_context_data(self, **kwargs):
-        """ Отправка формы в шаблон"""
+        """Отправка формы в шаблон"""
         context = super().get_context_data(**kwargs)
-        context['form'] = self.form_class()
+        context["form"] = self.form_class()
         return context
 
     def post(self, request, *args, **kwargs):
-        """ Обработка post запроса и отправки сообщения менеджеру на почту """
+        """Обработка post запроса и отправки сообщения менеджеру на почту"""
 
         form = self.form_class(request.POST)
         if form.is_valid():
@@ -32,15 +32,16 @@ class HomeViews(TemplateView):
             email = self.request.POST.get("email")
             send_mail(
                 subject="Обратная связь",
-                message=f"Здравствуйте, Вам пришло сообщение с сайта ресторана (с формы обратной связи). Имя отправителя {name}, "
-                        f"сообщение: {message}. Связаться можно по тел.: {phone} или почте: {email}",
+                message=f"Здравствуйте, Вам пришло сообщение с сайта ресторана (с формы обратной связи). "
+                        f"Имя отправителя {name}, сообщение: {message}. "
+                        f"Связаться можно по тел.: {phone} или почте: {email}",
                 from_email=EMAIL_HOST_USER,
                 recipient_list=[EMAIL_HOST_USER],
             )
             messages.success(self.request, "Ваше сообщение отправлено менеджеру. В ближайшее время с Вами свяжутся")
-            return redirect('reservation:home')
+            return redirect("reservation:home")
         context = self.get_context_data()
-        context['form'] = form
+        context["form"] = form
         return self.render_to_response(context)
 
 
@@ -74,16 +75,24 @@ class ReservationDetail(DetailView):
 
 
 class ReservationList(ListView):
-    """ Контроллер вывода списка брони """
+    """Контроллер вывода списка брони"""
 
     model = Reservation
     template_name = "reservation/reservation_list.html"
     context_object_name = "reservations"
 
     def get_queryset(self):
-        """ Выборка брони по пользователю"""
+        """Выборка брони по пользователю"""
         queryset = super().get_queryset()
         return queryset.filter(customer=self.request.user.id)
+
+
+class ReservationDelete(DeleteView):
+    """Контроллер удаления брони"""
+
+    model = Reservation
+    template_name = "reservation/reservation_delete.html"
+    success_url = reverse_lazy("reservation:reservation_list")
 
 
 class TableList(ListView):

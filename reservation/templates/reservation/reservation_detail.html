@@ -1,0 +1,28 @@
+{% extends 'reservation/base.html' %}
+
+{% block title %}Информация по бронированию{% endblock %}
+
+{% block content %}
+<section class="bg-light p-5 rounded mb-5">
+    <h2>Информация по бронированию Стол №: {{ table.table_number }}</h2>
+     <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <p>Вы забронировали столик на {{ reservation.date_reservation }} на {{ reservation.time_reservation }}</p>
+                <p>Количество гостей: {{ reservation.count_people }}</p>
+                <p>Ваш столик: {{ reservation.table.table_number }} забронирован на {{ reservation.count_hours }} часов.</p>
+                {% if reservation.wishes %}
+                 <p>Ваши пожелания: {{ reservation.wishes }}</p>
+                {% endif %}
+
+            <!--    {% if perms.mailing.change_message %}-->
+
+            <!--    {% endif %}-->
+                <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary">Вернуться к списку</a>
+                <a href="{% url 'reservation:reservation_update' table.pk %}" class="btn btn-secondary">Редактировать</a>
+                <a href="{% url 'reservation:reservation_delete' table.pk %}" class="btn btn-danger">Удалить</a>
+
+            </div>
+         <h3> Будем рады видеть Вас у нас! </h3>
+        </div>
+    </section>
+{% endblock %}

@@ -59,4 +59,6 @@ class UserUpdateForm(StyleFormMixin, UserChangeForm):
             "phone",
             "avatar",
             "tg_name",
+            "last_name",
+            "first_name"
         )

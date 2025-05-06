@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 
 from django.utils import timezone
 from django import forms
@@ -27,10 +27,12 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
         """Валидация проверки даты бронирования столика"""
         cleaned_data = super().clean()
         date_reservation = cleaned_data.get("date_reservation")
-        today = datetime.now().today()
+        today = date.today()
 
-        if date_reservation >= today:
+        if date_reservation < today:
             self.add_error("date_reservation", "Дата бронирования не может быть позже сегодняшней даты")
+
+        return date_reservation
 
     def clean_time_reservation(self):
         """Валидация проверки время бронирования столика"""
@@ -40,6 +42,8 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
 
         if time_reservation > time_plus_2h:
             self.add_error("time_reservation", "Бронирование доступно за 2 часа до назначенного часа")
+
+        return time_reservation
 
 
 class TableForm(StyleFormMixin, forms.ModelForm):

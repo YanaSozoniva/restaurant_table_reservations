@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, UpdateView
+from django.views.generic import CreateView, UpdateView, DetailView
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserUpdateForm
@@ -55,3 +55,11 @@ class UserUpdateViews(LoginRequiredMixin, UpdateView):
 
     def get_success_url(self):
         return reverse("users:user_detail", args=[self.kwargs.get("pk")])
+
+
+class UserDetail(DetailView):
+    """Контроллер вывода списка сообщений"""
+
+    model = User
+    template_name = "users/user_detail.html"
+    context_object_name = "user"

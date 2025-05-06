@@ -56,7 +56,7 @@ class ReservationCreate(CreateView):
     model = Reservation
     form_class = ReservationForm
     template_name = "reservation/reservation_form.html"
-    # success_url = reverse_lazy("mailing:message_list")
+    success_url = reverse_lazy("reservation:reservation_detail")
 
     def form_valid(self, form):
         reservation = form.save()
@@ -64,6 +64,26 @@ class ReservationCreate(CreateView):
         reservation.customer = user
         reservation.save()
         return super().form_valid(form)
+
+
+class ReservationDetail(DetailView):
+    """Контроллер детализации брони"""
+
+    model = Reservation
+    template_name = "reservation/reservation_detail.html"
+
+
+class ReservationList(ListView):
+    """ Контроллер вывода списка брони """
+
+    model = Reservation
+    template_name = "reservation/reservation_list.html"
+    context_object_name = "reservations"
+
+    def get_queryset(self):
+        """ Выборка брони по пользователю"""
+        queryset = super().get_queryset()
+        return queryset.filter(customer=self.request.user.id)
 
 
 class TableList(ListView):

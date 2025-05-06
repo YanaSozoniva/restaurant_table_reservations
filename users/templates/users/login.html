@@ -2,8 +2,9 @@
 
 {% block content %}
 
-<div class="container">
-  <div class="row">
+<section class="bg-light p-5 rounded mb-5">
+    <div class="row justify-content-center">
+            <div class="col-lg-8">
  {% if messages %}
           {% for message in messages %}
         <div class="alert alert-{{ message.tags }}">
@@ -33,5 +34,5 @@
 
   </div>
 </div>
-
+    </section>
 {% endblock %}

@@ -12,10 +12,10 @@ from users.forms import StyleFormMixin
 class ContactForm(StyleFormMixin, forms.Form):
     """Форма обратной связи"""
 
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField(validators=[EmailValidator()])
-    phone = PhoneNumberField(required=False)
-    message = forms.CharField(widget=forms.Textarea)
+    name = forms.CharField(max_length=100, label="Имя")
+    email = forms.EmailField(validators=[EmailValidator()], label="Почта")
+    phone = PhoneNumberField(required=False, label="Телефон")
+    message = forms.CharField(widget=forms.Textarea, label="Сообщение")
 
 
 class ReservationForm(StyleFormMixin, forms.ModelForm):

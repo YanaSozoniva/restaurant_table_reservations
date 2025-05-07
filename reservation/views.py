@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.core.cache import cache
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
@@ -83,7 +84,9 @@ class ReservationList(ListView):
 
     def get_queryset(self):
         """Выборка брони по пользователю"""
-        queryset = super().get_queryset()
+        queryset = cache.get('reservations_queryset')
+        if not queryset:
+            queryset = super().get_queryset()
         return queryset.filter(customer=self.request.user.id)
 
 

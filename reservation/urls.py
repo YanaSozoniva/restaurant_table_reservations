@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.cache import cache_page
 
 from reservation.apps import ReservationConfig
 from reservation.views import (AboutRestaurantViews, HomeViews, ReservationCreate, ReservationDetail, ReservationList,
@@ -7,8 +8,8 @@ from reservation.views import (AboutRestaurantViews, HomeViews, ReservationCreat
 app_name = ReservationConfig.name
 
 urlpatterns = [
-    path("", HomeViews.as_view(), name="home"),
-    path("restaurant/", AboutRestaurantViews.as_view(), name="restaurant"),
+    path("", cache_page(60*10)(HomeViews.as_view()), name="home"),
+    path("restaurant/",  cache_page(60*10)(AboutRestaurantViews.as_view()), name="restaurant"),
     path("reservation/create/", ReservationCreate.as_view(), name="reservation_create"),
     path("reservation/<int:pk>/", ReservationDetail.as_view(), name="reservation_detail"),
     path("table/<int:pk>/delete/", ReservationDelete.as_view(), name="reservation_delete"),

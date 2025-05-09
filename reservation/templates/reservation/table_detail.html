@@ -5,10 +5,12 @@
 
 {% block content %}
 <section class="bg-light p-5 rounded mb-5">
-    <h2>Стол №: {{ table.table_number }}</h2>
+     <div class="text-center">  <!-- Добавленный контейнер с выравниванием по центру -->
+        <h2>Стол №{{ table.table_number }}</h2>
+    </div>
      <div class="row justify-content-center">
             <div class="col-lg-8">
-                <img class="card-img-top" src="{{ table.photo_table | media_filter }}" alt="Card image cap">
+                <img class="card-img-top" src="{{ table.photo_table | media_filter }}" alt="Card image cap"  style="max-width: 300px; height: auto;">
                 <p>Расположение: {{ table.location }}</p>
                 <p>Вместительность стола: {{ table.table_capacity }} чел.</p>
             <!--    {% if perms.mailing.change_message %}-->

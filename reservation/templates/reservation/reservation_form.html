@@ -1,27 +1,207 @@
 {% extends 'reservation/base.html' %}
 {% block content %}
- <section class="bg-light p-5 rounded mb-5">
-        <h2 class="text-center mb-4">Бронирование </h2>
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <form method="post" enctype="multipart/form-data">
-                   <div class="card-body">
-                     {% csrf_token %}
-                       {{ form.as_p }}
+<section class="bg-light p-5 rounded mb-5">
+    <h2 class="text-center mb-4">Бронирование</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <form method="post" enctype="multipart/form-data" id="reservationForm" class="needs-validation" novalidate>
+                <div class="card-body">
+                    {% csrf_token %}
+
+                    {# Общие ошибки формы #}
+                    {% if form.non_field_errors %}
+                        <div class="alert alert-danger mb-4">
+                            {% for error in form.non_field_errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {# Автоматический вывод полей формы с кастомизированными ошибками #}
+                    {% for field in form %}
+                        {% if field.name != 'table' %} {# Поле table обрабатываем отдельно #}
+                            <div class="mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label">
+                                    {{ field.label }}
+                                    {% if field.field.required %}<span class="text-danger">*</span>{% endif %}
+                                </label>
+
+                                {{ field }}
+
+                                {% if field.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {% for error in field.errors %}
+                                            {{ error }}<br>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
+
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+
+                    {# Скрытое поле для выбранного столика #}
+                    {{ form.table }}
+
+                    {# Блок с доступными столиками #}
+                    <div class="mt-4">
+                        <h3>Доступные столики:</h3>
+                        <div id="availableTables" class="row mt-3">
+                            {% for table in all_tables %}
+                                <div class="col-md-6 mb-3">
+                                    <div class="table-option card h-100 {% if form.table.value|stringformat:'s' == table.id|stringformat:'s' %}selected{% endif %}"
+                                         data-id="{{ table.id }}">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Столик №{{ table.table_number }}</h5>
+                                            <p class="card-text">
+                                                <span class="badge bg-primary">{{ table.table_capacity }} чел.</span>
+                                                {% if table.location %}
+                                                    <span class="d-block mt-2">{{ table.location }}</span>
+                                                {% endif %}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                 {% if object %}
-                 Сохранить
-                 {% else %}
-                 Забронировать
-                {% endif %}
-             </button>
-            <a href="{% url 'reservation:home' %}" class="btn btn-secondary">Отмена</a>
+                </div>
 
-                </form>
-            </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-primary">Забронировать</button>
+                    <a href="{% url 'reservation:home' %}" class="btn btn-secondary">Отмена</a>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
+</section>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dateField = document.getElementById('id_date_reservation');
+    const timeField = document.getElementById('id_time_reservation');
+    const tablesContainer = document.getElementById('availableTables');
+    const tableInput = document.getElementById('id_table');
+    const form = document.getElementById('reservationForm');
+
+    // Отладочный вывод сразу после получения элементов
+    console.log('Date field element:', dateField);
+    console.log('Time field element:', timeField);
+    console.log('Table input element:', tableInput);
+    console.log('Form element:', form);
+
+    function updateAvailableTables() {
+        const date = dateField.value;
+        const time = timeField.value;
+
+        // Отладочный вывод значений полей
+        console.log('Date field value:', date);
+        console.log('Time field value:', time);
+        console.log('Current table input value:', tableInput.value);
+        console.log(`Запрос к: {% url 'reservation:get_available_tables' %}?date_reservation=${date}&time_reservation=${time}`);
+
+        if (date && time) {
+            tablesContainer.innerHTML = `
+                <div class="col-12 text-center py-4">
+                    <div class="spinner-border text-primary"></div>
+                    <p class="mt-2">Загрузка доступных столиков...</p>
+                </div>
+            `;
+
+            fetch(`{% url 'reservation:get_available_tables' %}?date_reservation=${date}&time_reservation=${time}`)
+                .then(response => {
+                    console.log('Response status:', response.status);
+                    if (!response.ok) throw new Error('Ошибка загрузки данных');
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Received data:', data);
+                    if (data.tables && data.tables.length > 0) {
+                        tablesContainer.innerHTML = data.tables.map(table => `
+                            <div class="col-md-6 mb-3">
+                                <div class="table-option card h-100 ${tableInput.value == table.id ? 'selected' : ''}"
+                                     data-id="${table.id}">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Столик №${table.number}</h5>
+                                        <p class="card-text">
+                                            <span class="badge bg-primary">${table.capacity} чел.</span>
+                                            ${table.location ? `<span class="d-block mt-2">${table.location}</span>` : ''}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        console.warn('No available tables received');
+                        tablesContainer.innerHTML = `
+                            <div class="col-12">
+                                <div class="alert alert-warning">
+                                    Нет доступных столиков на выбранное время
+                                </div>
+                            </div>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    tablesContainer.innerHTML = `
+                        <div class="col-12">
+                            <div class="alert alert-danger">
+                                Произошла ошибка при загрузке данных: ${error.message}. Пожалуйста, попробуйте еще раз позже.
+                            </div>
+                        </div>
+                    `;
+                });
+        } else {
+            console.log('Date or time not selected');
+        }
+    }
+
+    if (dateField && timeField) {
+        dateField.addEventListener('change', updateAvailableTables);
+        timeField.addEventListener('change', updateAvailableTables);
+
+        // Проверка начальных значений
+        console.log('Initial date value:', dateField.value);
+        console.log('Initial time value:', timeField.value);
+        if (dateField.value && timeField.value) {
+            updateAvailableTables();
+        }
+    } else {
+        console.error('Could not find date or time fields');
+    }
+
+    tablesContainer.addEventListener('click', function(e) {
+        const tableOption = e.target.closest('.table-option');
+        if (tableOption) {
+            const tableId = tableOption.dataset.id;
+            tableInput.value = tableId;
+            console.log('Selected table ID:', tableId);
+
+            document.querySelectorAll('.table-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            tableOption.classList.add('selected');
+        }
+    });
+
+    if (form) {
+        form.addEventListener('submit', function(event) {
+            console.log('Form submitted. Table value:', tableInput.value);
+            if (!form.checkValidity()) {
+                console.log('Form is invalid');
+                event.preventDefault();
+                event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+    } else {
+        console.error('Form element not found');
+    }
+});
+</script>
 
 {% endblock %}

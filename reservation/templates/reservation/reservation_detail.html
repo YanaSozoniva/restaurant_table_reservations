@@ -23,9 +23,11 @@
                         <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary me-2">
                             <i class="bi bi-list"></i> К списку бронирований
                         </a>
+
                         <a href="{% url 'reservation:reservation_delete' reservation.pk %}" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Удалить
                         </a>
+
                     </div>
                 </div>
             </div>

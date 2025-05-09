@@ -1,8 +1,8 @@
 from datetime import date
 
 from django import forms
+from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
-from django.utils import timezone
 from phonenumber_field.formfields import PhoneNumberField
 
 from reservation.models import Reservation, Table
@@ -23,29 +23,17 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Reservation
-        exclude = ("customer",)
+        exclude = ("customer", )
 
-    def clean_date_reservation(self):
-        """Валидация проверки даты бронирования столика"""
-        cleaned_data = super().clean()
-        date_reservation = cleaned_data.get("date_reservation")
+    def clean_date_reserved(self):
+        """Валидация даты бронирования"""
+        date_reserved = self.cleaned_data.get('date_reservation')
         today = date.today()
 
-        if date_reservation < today:
-            self.add_error("date_reservation", "Дата бронирования не может быть позже сегодняшней даты")
+        if date_reserved < today:
+            raise ValidationError("Дата бронирования не может быть раньше сегодняшнего дня")
 
-        return date_reservation
-
-    # def clean_time_reservation(self):
-    #     """Валидация проверки время бронирования столика"""
-    #     time_reservation = self.cleaned_data.get("time_reservation")
-    #     now = timezone.now()
-    #     time_plus_2h = (now + timezone.timedelta(hours=2)).time()
-    #
-    #     if time_reservation < time_plus_2h:
-    #         self.add_error("time_reservation", "Бронирование доступно за 2 часа до назначенного часа")
-    #
-    #     return time_reservation
+        return date_reserved
 
 
 class TableForm(StyleFormMixin, forms.ModelForm):

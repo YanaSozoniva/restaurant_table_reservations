@@ -1,13 +1,20 @@
+from datetime import datetime
+
 from django.contrib import messages
 from django.core.cache import cache
 from django.core.mail import send_mail
 from django.shortcuts import redirect
 from django.urls import reverse, reverse_lazy
+from django.views.decorators.http import require_GET
+from django.http import JsonResponse
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 from reservation.forms import ContactForm, ReservationForm, TableForm
 from reservation.models import Reservation, Table
+from reservation.services import get_free_tables
+import logging
+logger = logging.getLogger(__name__)
 
 
 class HomeViews(TemplateView):
@@ -53,12 +60,12 @@ class AboutRestaurantViews(TemplateView):
 
 
 class ReservationCreate(CreateView):
-    """Контроллер бронирования столика"""
+    """Контроллер нового бронирования столика"""
 
     model = Reservation
     form_class = ReservationForm
     template_name = "reservation/reservation_form.html"
-    success_url = reverse_lazy("reservation:reservation_detail")
+    success_url = reverse_lazy("reservation:reservation_list")
 
     def form_valid(self, form):
         reservation = form.save()
@@ -66,6 +73,39 @@ class ReservationCreate(CreateView):
         reservation.customer = user
         reservation.save()
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_tables'] = Table.objects.all()  # Получаем все столики
+        return context
+
+
+@require_GET
+def get_available_tables(request):
+    """AJAX-функция для получения доступных столиков"""
+    logger.debug(f"Получен запрос с параметрами: {request.GET}")
+    date_str = request.GET.get('date_reservation')
+    time_str = request.GET.get('time_reservation')
+
+    if not date_str or not time_str:
+        return JsonResponse({'error': 'Не указана дата или время'}, status=400)
+
+        # Получаем занятые столики на эту дату и время
+    try:
+        date = datetime.strptime(date_str, '%Y-%m-%d').date()
+        time = datetime.strptime(time_str, '%H:%M').time()
+        available_tables = get_free_tables(date, time)
+        tables_data = [{
+            'id': table.id,
+            'number': table.table_number,
+            'capacity': table.table_capacity,
+            'location': table.location or "",
+        } for table in available_tables]
+
+        return JsonResponse({'tables': tables_data})
+
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=400)
 
 
 class ReservationDetail(DetailView):
@@ -81,6 +121,7 @@ class ReservationList(ListView):
     model = Reservation
     template_name = "reservation/reservation_list.html"
     context_object_name = "reservations"
+    ordering = ['date_reservation', 'time_reservation']
 
     def get_queryset(self):
         """Выборка брони по пользователю"""

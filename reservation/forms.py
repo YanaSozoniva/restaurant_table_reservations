@@ -23,11 +23,11 @@ class ReservationForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Reservation
-        exclude = ("customer", )
+        exclude = ("customer",)
 
     def clean_date_reserved(self):
         """Валидация даты бронирования"""
-        date_reserved = self.cleaned_data.get('date_reservation')
+        date_reserved = self.cleaned_data.get("date_reservation")
         today = date.today()
 
         if date_reserved < today:

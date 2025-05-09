@@ -1,7 +1,11 @@
 {% extends 'reservation/base.html' %}
 {% block content %}
 <section class="bg-light p-5 rounded mb-5">
+    {% if object %}
+             <h2 class="ext-center mb-4">Редактирование</h2>
+     {% else %}
     <h2 class="text-center mb-4">Бронирование</h2>
+    {% endif %}
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <form method="post" enctype="multipart/form-data" id="reservationForm" class="needs-validation" novalidate>
@@ -71,8 +75,12 @@
                 </div>
 
                 <div class="d-flex justify-content-between mt-4">
+                    {% if object %}
+                    <button type="submit" class="btn btn-primary">Редактирование</button>
+                     {% else %}
                     <button type="submit" class="btn btn-primary">Забронировать</button>
-                    <a href="{% url 'reservation:home' %}" class="btn btn-secondary">Отмена</a>
+                    {% endif %}
+                    <a href="{% url 'reservation:reservation_list' %}" class="btn btn-secondary">Отмена</a>
                 </div>
             </form>
         </div>

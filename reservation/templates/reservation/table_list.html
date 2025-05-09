@@ -1,21 +1,42 @@
 {% extends 'reservation/base.html' %}
-
+{% load my_tags %}
 {% block title %}Список столов{% endblock %}
 
 {% block content %}
 
+<div class="text-center">
+<h2>Список столов</h2>
+    </div>
+<div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for table in tables %}
+            <div class="col-3">
+
+            <div class="card mb-4 rounded-3 shadow-sm">
+                <div class="card-header">
+                    <img class="card-img-top" src="{{ table.photo_table | media_filter }}" alt="Card image cap"  style="max-width: 300px; height: auto;">
+                </div>
+                <div class="card-body">
+                    <h3 class="card-title pricing-card-title">Стол № {{ table.table_number }}</h3>
+                    <p>Вместимость: {{ table.table_capacity }} </p>
+                    <p>Расположение столика: {{ table.location }} </p>
+
+                    <a class="btn btn-primary" href="{% url 'reservation:table_detail' table.pk %}" role="button">Подробнее</a>
+
+
+                </div>
+            </div>
+
+            </div>
+            {% endfor %}
+    </div>
+
+</div>
 <p>
     <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
         <a class="btn btn-primary btn-lg px-4 me-sm-3" href="{% url 'reservation:table_create' %}">Добавить новый стол</a>
     </div>
 </p>
-<h2>Список столов</h2>
-<ul class="list-group">
-    {% for table in tables %}
-        <li class="list-group-item">
-            <a href="{% url 'reservation:table_detail' table.pk %}">{{ table.table_number }} расположение: {{ table.location }}</a>
-        </li>
-    {% endfor %}
-</ul>
 
 {% endblock %}

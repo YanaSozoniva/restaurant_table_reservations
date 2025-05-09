@@ -47,7 +47,14 @@
                     <a class="btn btn-link nav" href="{% url 'users:register' %}">Регистрация</a>
                 </li>
                 {% endif %}
+                  <div class="d-flex ms-lg-auto">  <!-- ms-lg-auto сдвигает вправо -->
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                      <a class="btn btn-link nav" href="#">Админ</a>
+                </li>
+                      {% endif %}
             </div>
         </div>
     </div>
+        </div>
 </nav>

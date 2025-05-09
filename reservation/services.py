@@ -4,7 +4,7 @@ from reservation.models import Reservation, Table
 
 
 def add_hours(t, hours):
-    """ Функция вычисления времени освобождения столика """
+    """Функция вычисления времени освобождения столика"""
     total_seconds = (t.hour + hours) * 3600 + t.minute * 60 + t.second
     new_hour = (total_seconds // 3600) % 24
     remaining_seconds = total_seconds % 3600
@@ -15,7 +15,7 @@ def add_hours(t, hours):
 
 
 def get_free_tables(date_reservation, time_reservation):
-    """ Выборка свободных столиков """
+    """Выборка свободных столиков"""
     reservations = Reservation.objects.filter(date_reservation=date_reservation)
 
     if not reservations:
@@ -23,7 +23,7 @@ def get_free_tables(date_reservation, time_reservation):
 
     reserved_tables = []
     for reservation in reservations:
-        new_time = add_hours(reservation.time_reservation, reservation.count_hours+1)
+        new_time = add_hours(reservation.time_reservation, reservation.count_hours + 1)
         if time_reservation >= reservation.time_reservation and time_reservation < new_time:
             reserved_tables.append(reservation.table.id)
 

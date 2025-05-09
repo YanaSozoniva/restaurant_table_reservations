@@ -14,6 +14,7 @@
                             <th>Время</th>
                             <th>Кол-во гостей</th>
                             <th>Столик</th>
+                            <th>Заказчик</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,11 +24,12 @@
                             <td>{{ reservation.time_reservation|time:"H:i" }}</td>
                             <td>{{ reservation.count_people }}</td>
                             <td>№{{ reservation.table.table_number }}</td>
+                            {% if perms.user.can_change_content %}
+                            <td>№{{ reservation.customer.email }}</td>
+                            {% endif %}
                             <td>
                                 <a href="{% url 'reservation:reservation_detail' reservation.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
-                                {% if reservation.can_cancel %}
-                                <a href="{% url 'reservation:cancel' reservation.pk %}" class="btn btn-sm btn-outline-danger">Отменить бронирование</a>
-                                {% endif %}
+
                             </td>
                         </tr>
                         {% endfor %}

@@ -13,12 +13,12 @@
                 <img class="card-img-top" src="{{ table.photo_table | media_filter }}" alt="Card image cap"  style="max-width: 300px; height: auto;">
                 <p>Расположение: {{ table.location }}</p>
                 <p>Вместительность стола: {{ table.table_capacity }} чел.</p>
-            <!--    {% if perms.mailing.change_message %}-->
 
-            <!--    {% endif %}-->
                 <a href="{% url 'reservation:table_list' %}" class="btn btn-primary">Вернуться к списку</a>
+                {% if perms.user.can_change_content %}
                 <a href="{% url 'reservation:table_update' table.pk %}" class="btn btn-secondary">Редактировать</a>
                 <a href="{% url 'reservation:table_delete' table.pk %}" class="btn btn-danger">Удалить</a>
+                {% endif %}
 
             </div>
         </div>

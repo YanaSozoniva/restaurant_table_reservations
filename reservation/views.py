@@ -54,7 +54,7 @@ class HomeViews(TemplateView):
 
 
 class AboutRestaurantViews(TemplateView):
-    """Контроллер для отображения главной страница сайта"""
+    """Контроллер для отображения страница о ресторане"""
 
     template_name = "reservation/restaurant.html"
 
@@ -137,6 +137,18 @@ class ReservationDelete(DeleteView):
     model = Reservation
     template_name = "reservation/reservation_delete.html"
     success_url = reverse_lazy("reservation:reservation_list")
+
+
+class ReservationUpdate(UpdateView):
+    """Контроллер изменения бронирования"""
+
+    model = Reservation
+    form_class = ReservationForm
+    template_name = "reservation/reservation_update.html"
+    success_url = reverse_lazy("reservation:reservation_list")
+
+    def get_success_url(self):
+        return reverse("reservation:reservation_detail", args=[self.kwargs.get("pk")])
 
 
 class TableList(ListView):

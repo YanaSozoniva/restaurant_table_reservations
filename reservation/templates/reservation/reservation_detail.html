@@ -24,6 +24,17 @@
                             <i class="bi bi-list"></i> К списку бронирований
                         </a>
 
+                        {% load tz %}
+                        {% now "Y-m-d" as current_date %}
+                        {% now "H:i" as current_time %}
+
+                        {% with reservation_date=reservation.date_reservation|date:"Y-m-d" %}
+                            {% if reservation_date > current_date or reservation_date == current_date and reservation.time_reservation|time:"H:i" > current_time|add:"1:00" %}
+                        <a href="{% url 'reservation:reservation_update' reservation.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-list"></i> Редактировать
+                        </a>
+                        {% endif %}
+                        {% endwith %}
                         <a href="{% url 'reservation:reservation_delete' reservation.pk %}" class="btn btn-danger">
                             <i class="bi bi-trash"></i> Удалить
                         </a>

@@ -24,7 +24,7 @@
                             <td>{{ reservation.time_reservation|time:"H:i" }}</td>
                             <td>{{ reservation.count_people }}</td>
                             <td>№{{ reservation.table.table_number }}</td>
-                            {% if perms.user.can_change_content %}
+                            {% if perms.users.can_change_content %}
                             <td>№{{ reservation.customer.email }}</td>
                             {% endif %}
                             <td>

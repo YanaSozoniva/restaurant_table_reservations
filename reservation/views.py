@@ -133,7 +133,7 @@ class ReservationList(LoginRequiredMixin, ListView):
         queryset = cache.get("reservations_queryset")
         if not queryset:
             queryset = super().get_queryset()
-        if not self.request.user.has_perm("user.can_change_content"):
+        if not self.request.user.has_perm("users.can_change_content"):
             return queryset.filter(customer=self.request.user.id)
         return Reservation.objects.all()
 
@@ -187,7 +187,7 @@ class TableCreate(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = TableForm
     template_name = "reservation/table_form.html"
     success_url = reverse_lazy("reservation:table_list")
-    permission_required = "table.add_table"
+    permission_required = "reservation.add_table"
 
 
 class TableUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
@@ -197,7 +197,7 @@ class TableUpdate(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     form_class = TableForm
     template_name = "reservation/table_form.html"
     success_url = reverse_lazy("reservation:table_list")
-    permission_required = "table.change_table"
+    permission_required = "reservation.change_table"
 
     def get_success_url(self):
         return reverse("reservation:table_detail", args=[self.kwargs.get("pk")])
@@ -209,14 +209,14 @@ class TableDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     model = Table
     template_name = "reservation/table_confirm_delete.html"
     success_url = reverse_lazy("reservation:table_list")
-    permission_required = "table.delete_table"
+    permission_required = "reservation.delete_table"
 
 
 class AdminPageViews(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     """Контроллер для отображения страница для администратора сайта"""
 
     template_name = "reservation/admin_page.html"
-    permission_required = "user.can_change_content"
+    permission_required = "users.can_change_content"
 
     def get_context_data(self, **kwargs):
         """ Статистические данные """

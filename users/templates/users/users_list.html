@@ -5,6 +5,7 @@
 <ul class="list-group">
     {% for user in users %}
         <li class="list-group-item">
+            {{ user.id }}
             {{ user.email }}
             <a href="{% url 'users:user_detail' user.pk %}" class="btn btn-primary">Подробнее</a>
             <a href="{% url 'users:user_update' user.pk %}" class="btn btn-secondary">Редактировать</a>

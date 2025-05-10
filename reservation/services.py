@@ -39,6 +39,6 @@ def get_statistical_data():
         'reservations_count': Reservation.objects.count(),
         'tables_count': Table.objects.count(),
         'users_count': User.objects.exclude(user_permissions__codename='can_change_content').count,
-        'recent_reservations': Reservation.objects.select_related('user', 'table').order_by('-date', '-time')[:10]
+        'recent_reservations': Reservation.objects.select_related('customer', 'table').order_by('-date_reservation', '-time_reservation')[:10]
     }
     return context

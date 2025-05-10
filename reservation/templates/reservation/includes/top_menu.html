@@ -48,7 +48,7 @@
                 </li>
                 {% endif %}
                   <div class="d-flex ms-lg-auto">
-                {% if perms.user.can_change_content %}
+                {% if perms.users.can_change_content %}
                 <li class="nav-item">
                       <a class="btn btn-link nav" href="{% url 'reservation:admin_page' %}">Админ</a>
                 </li>

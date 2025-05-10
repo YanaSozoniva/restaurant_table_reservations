@@ -71,7 +71,7 @@ class UserList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     model = User
     template_name = "users/users_list.html"
     context_object_name = "users"
-    permission_required = "users.can_change_content"
+    permission_required = "users.view_user"
 
     def get_queryset(self):
         """ Исключение из списка суперпользователя и всех менеджеров """
@@ -86,5 +86,6 @@ class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     """Контроллер удаления столов"""
 
     model = User
-    template_name = "user/user_confirm_delete.html"
+    template_name = "users/user_confirm_delete.html"
     success_url = reverse_lazy("user:user_list")
+    permission_required = "users.delete_user"

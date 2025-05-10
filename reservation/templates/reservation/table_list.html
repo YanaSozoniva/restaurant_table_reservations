@@ -21,7 +21,7 @@
                     <h3 class="card-title pricing-card-title">Стол № {{ table.table_number }}</h3>
                     <p>Вместимость: {{ table.table_capacity }} </p>
                     <p>Расположение столика: {{ table.location }} </p>
-                    {% if perms.user.can_change_content %}
+                    {% if perms.users.can_change_content %}
                     <a class="btn btn-primary" href="{% url 'reservation:table_detail' table.pk %}" role="button">Подробнее</a>
                     {% endif %}
                 </div>
@@ -32,7 +32,7 @@
     </div>
 
 </div>
-{% if perms.user.can_change_content %}
+{% if perms.users.can_change_content %}
 
 <p>
 

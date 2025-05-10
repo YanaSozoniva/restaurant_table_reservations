@@ -14,6 +14,9 @@
                 <p>Имя: {{ user.first_name }}</p>
                 <a href="{% url 'users:user_update' user.pk %}" class="btn btn-primary">Редактировать</a>
                 <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary">История бронирования</a>
+                {% if perms.user.can_change_content %}
+                <a href="{% url 'reservation:table_list' %}" class="btn btn-primary">Вирнуться к списку</a>
+                {% endif %}
             </div>
     </div>
 

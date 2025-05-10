@@ -1,11 +1,11 @@
 import secrets
 
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserUpdateForm
@@ -63,3 +63,28 @@ class UserDetail(DetailView):
     model = User
     template_name = "users/user_detail.html"
     context_object_name = "user"
+
+
+class UserList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    """Контроллер вывода списка сообщений"""
+
+    model = User
+    template_name = "users/users_list.html"
+    context_object_name = "users"
+    permission_required = "users.can_change_content"
+
+    def get_queryset(self):
+        """ Исключение из списка суперпользователя и всех менеджеров """
+        queryset = super().get_queryset()
+        queryset = queryset.filter(is_superuser=False)
+        # Исключаем пользователей с правами can_change_content
+        queryset = queryset.exclude(groups__permissions__codename='can_change_content')
+        return queryset
+
+
+class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    """Контроллер удаления столов"""
+
+    model = User
+    template_name = "user/user_confirm_delete.html"
+    success_url = reverse_lazy("user:user_list")

@@ -1,6 +1,7 @@
 from datetime import time
 
 from reservation.models import Reservation, Table
+from users.models import User
 
 
 def add_hours(t, hours):
@@ -30,3 +31,14 @@ def get_free_tables(date_reservation, time_reservation):
     available_tables = Table.objects.exclude(id__in=reserved_tables)
 
     return available_tables
+
+
+def get_statistical_data():
+    """ Функция получения статистической информации по количеству столиков, бронирования и т.п. """
+    context = {
+        'reservations_count': Reservation.objects.count(),
+        'tables_count': Table.objects.count(),
+        'users_count': User.objects.exclude(user_permissions__codename='can_change_content').count,
+        'recent_reservations': Reservation.objects.select_related('user', 'table').order_by('-date', '-time')[:10]
+    }
+    return context

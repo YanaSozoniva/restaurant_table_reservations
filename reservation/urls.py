@@ -4,13 +4,14 @@ from django.views.decorators.cache import cache_page
 from reservation.apps import ReservationConfig
 from reservation.views import (AboutRestaurantViews, HomeViews, ReservationCreate, ReservationDelete,
                                ReservationDetail, ReservationList, ReservationUpdate, TableCreate, TableDelete,
-                               TableDetail, TableList, TableUpdate, get_available_tables)
+                               TableDetail, TableList, TableUpdate, get_available_tables, AdminPageViews)
 
 app_name = ReservationConfig.name
 
 urlpatterns = [
     path("", HomeViews.as_view(), name="home"),
     path("restaurant/", cache_page(60 * 10)(AboutRestaurantViews.as_view()), name="restaurant"),
+    path("admin_page/", cache_page(60 * 10)(AdminPageViews.as_view()), name="admin_page"),
     path("reservation/create/", ReservationCreate.as_view(), name="reservation_create"),
     path("reservation/<int:pk>/", ReservationDetail.as_view(), name="reservation_detail"),
     path("reservation/<int:pk>/update/", ReservationUpdate.as_view(), name="reservation_update"),

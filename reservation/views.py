@@ -15,7 +15,8 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, T
 from config.settings import EMAIL_HOST_USER
 from reservation.forms import ContactForm, ReservationForm, TableForm
 from reservation.models import Reservation, Table
-from reservation.services import get_free_tables
+from reservation.services import get_free_tables, get_statistical_data
+
 
 
 @method_decorator(cache_page(60 * 15), name="dispatch")
@@ -163,7 +164,7 @@ class ReservationUpdate(LoginRequiredMixin, UpdateView):
         return context
 
 
-@method_decorator(cache_page(60 * 15), name="dispatch")
+@method_decorator(cache_page(60 * 3), name="dispatch")
 class TableList(ListView):
     """Контроллер вывода списка столов"""
 
@@ -209,3 +210,17 @@ class TableDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "reservation/table_confirm_delete.html"
     success_url = reverse_lazy("reservation:table_list")
     permission_required = "table.delete_table"
+
+
+class AdminPageViews(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    """Контроллер для отображения страница для администратора сайта"""
+
+    template_name = "reservation/admin_page.html"
+    permission_required = "user.can_change_content"
+
+    def get_context_data(self, **kwargs):
+        """ Статистические данные """
+        context = super().get_context_data(**kwargs)
+
+        context["data"] = get_statistical_data()
+        return context

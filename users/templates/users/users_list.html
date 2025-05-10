@@ -1,0 +1,16 @@
+{% extends 'reservation/base.html' %}
+
+{% block content %}
+<h2>Список пользователей</h2>
+<ul class="list-group">
+    {% for user in users %}
+        <li class="list-group-item">
+            {{ user.email }}
+            <a href="{% url 'users:user_detail' user.pk %}" class="btn btn-primary">Подробнее</a>
+            <a href="{% url 'users:user_update' user.pk %}" class="btn btn-secondary">Редактировать</a>
+            <a href="{% url 'users:user_delete' user.pk %}" class="btn btn-danger">Удалить</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

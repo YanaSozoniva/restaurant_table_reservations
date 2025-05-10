@@ -3,7 +3,7 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetCompl
 from django.urls import path, reverse_lazy
 
 from users.apps import UsersConfig
-from users.views import UserCreateViews, UserDetail, UserUpdateViews, email_verification
+from users.views import UserCreateViews, UserDetail, UserUpdateViews, email_verification, UserList
 
 app_name = UsersConfig.name
 
@@ -41,4 +41,5 @@ urlpatterns = [
     path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
     path("users/<int:pk>/update", UserUpdateViews.as_view(), name="user_update"),
     path("users/<int:pk>/", UserDetail.as_view(), name="user_detail"),
+    path("users/", UserList.as_view(), name="user_list"),
 ]

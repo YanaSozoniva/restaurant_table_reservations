@@ -1,8 +1,8 @@
 from django.core.validators import MinValueValidator
 from django.db import models
 
-from users.models import User
 from reservation.validator import FileSizeValidator, ImageFormatValidator
+from users.models import User
 
 
 class Table(models.Model):
@@ -84,10 +84,14 @@ class Reservation(models.Model):
 
 
 class Restaurant(models.Model):
-    """ Модель ресторан """
+    """Модель ресторан"""
+
     name = models.CharField(max_length=200, verbose_name="Название ресторана")
-    logo = models.ImageField(upload_to="photos/", verbose_name="Логотип ресторана",
-                             validators=[FileSizeValidator(), ImageFormatValidator()],)
+    logo = models.ImageField(
+        upload_to="photos/",
+        verbose_name="Логотип ресторана",
+        validators=[FileSizeValidator(), ImageFormatValidator()],
+    )
     story = models.TextField(verbose_name="История ресторана")
     mission = models.TextField(verbose_name="Миссия")
 
@@ -97,9 +101,11 @@ class Restaurant(models.Model):
 
 
 class Employee(models.Model):
-    """ Модель сотрудники ресторана """
+    """Модель сотрудники ресторана"""
+
     name = models.CharField(max_length=200, verbose_name="Фамилия и имя сотрудника")
-    photo_employee = models.ImageField(upload_to="photos/", verbose_name="Фото сотрудника",
-                             validators=[FileSizeValidator(), ImageFormatValidator()])
+    photo_employee = models.ImageField(
+        upload_to="photos/", verbose_name="Фото сотрудника", validators=[FileSizeValidator(), ImageFormatValidator()]
+    )
     job_title = models.CharField(max_length=200, verbose_name="Должность")
     description = models.TextField(verbose_name="Комментарии о сотруднике", null=True, blank=True)

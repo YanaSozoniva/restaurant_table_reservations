@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView, ListView, DeleteView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserUpdateForm
@@ -74,11 +74,11 @@ class UserList(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = "users.view_user"
 
     def get_queryset(self):
-        """ Исключение из списка суперпользователя и всех менеджеров """
+        """Исключение из списка суперпользователя и всех менеджеров"""
         queryset = super().get_queryset()
         queryset = queryset.filter(is_superuser=False)
         # Исключаем пользователей с правами can_change_content
-        queryset = queryset.exclude(groups__permissions__codename='can_change_content')
+        queryset = queryset.exclude(groups__permissions__codename="can_change_content")
         return queryset
 
 

@@ -8,6 +8,7 @@ urlpatterns = [
     path("users/", include("users.urls", namespace="users")),
     path("admin/", admin.site.urls),
     path("", include("reservation.urls", namespace="reservation")),
+    path("admin_page/", include("admin_page.urls", namespace="admin_page")),
 ]
 
 if settings.DEBUG:

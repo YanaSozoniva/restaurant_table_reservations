@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "users",
     "reservation",
+    "admin_page",
 ]
 
 MIDDLEWARE = [

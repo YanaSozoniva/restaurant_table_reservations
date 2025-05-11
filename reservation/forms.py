@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from phonenumber_field.formfields import PhoneNumberField
 
-from reservation.models import Reservation, Table
+from reservation.models import Reservation, Table, Employee, Restaurant
 from users.forms import StyleFormMixin
 
 
@@ -41,4 +41,20 @@ class TableForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Table
+        fields = "__all__"
+
+
+class EmployeeForm(StyleFormMixin, forms.ModelForm):
+    """Форма для создания и редактирования столиков"""
+
+    class Meta:
+        model = Employee
+        fields = "__all__"
+
+
+class RestaurantForm(StyleFormMixin, forms.ModelForm):
+    """Форма для создания и редактирования столиков"""
+
+    class Meta:
+        model = Restaurant
         fields = "__all__"

@@ -34,11 +34,13 @@ def get_free_tables(date_reservation, time_reservation):
 
 
 def get_statistical_data():
-    """ Функция получения статистической информации по количеству столиков, бронирования и т.п. """
+    """Функция получения статистической информации по количеству столиков, бронирования и т.п."""
     context = {
-        'reservations_count': Reservation.objects.count(),
-        'tables_count': Table.objects.count(),
-        'users_count': User.objects.exclude(user_permissions__codename='can_change_content').count,
-        'recent_reservations': Reservation.objects.select_related('customer', 'table').order_by('-date_reservation', '-time_reservation')[:10]
+        "reservations_count": Reservation.objects.count(),
+        "tables_count": Table.objects.count(),
+        "users_count": User.objects.exclude(user_permissions__codename="can_change_content").count,
+        "recent_reservations": Reservation.objects.select_related("customer", "table").order_by(
+            "-date_reservation", "-time_reservation"
+        )[:10],
     }
     return context

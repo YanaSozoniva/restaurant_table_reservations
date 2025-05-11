@@ -7,92 +7,117 @@
             <p class="text-muted">Добро пожаловать, {{ user.email }}! Сегодня {% now "j F Y" %}</p>
         </div>
     </div>
-
-    <!-- Статистика -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 stat-card bg-reservations">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title text-muted">Общие количество бронирований</h5>
-                            <h2 class="mb-0">{{ data.reservations_count }}</h2>
-                        </div>
-                        <div class="icon-stat bg-purple">
-                            <i class="bi bi-calendar-check fs-1 text-purple"></i>
-                        </div>
+   <div class="row mb-4">
+    <!-- Первый ряд -->
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 stat-card bg-reservations">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title text-muted">Общие количество бронирований</h5>
+                        <h2 class="mb-0">{{ data.reservations_count }}</h2>
                     </div>
-                    <div class="mt-3">
-                        <a href="{% url 'reservation:reservation_list' %}" class="btn btn-sm btn-outline-purple">
-                            Управление бронирования<i class="bi bi-arrow-right"></i>
-                        </a>
+                    <div class="icon-stat bg-purple">
+                        <i class="bi bi-calendar-check fs-1 text-purple"></i>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 stat-card bg-tables">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title text-muted">Количество столиков</h5>
-                            <h2 class="mb-0">{{ data.tables_count }}</h2>
-                        </div>
-                        <div class="icon-stat bg-orange">
-                            <i class="bi bi-table fs-1 text-orange"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <a href="{% url 'reservation:table_list' %}" class="btn btn-sm btn-outline-orange">
-                            Управление столиками<i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4 mb-3">
-            <div class="card h-100 stat-card bg-users">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title text-muted">Количество зарегистрированных пользователей</h5>
-                            <h2 class="mb-0">{{ data.users_count }}</h2>
-                        </div>
-                        <div class="icon-stat bg-teal">
-                            <i class="bi bi-people fs-1 text-teal"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <a href="{% url 'users:user_list' %}" class="btn btn-sm btn-outline-teal">
-                            Управление пользователями<i class="bi bi-arrow-right"></i>
-                        </a>
-                    </div>
+                <div class="mt-3">
+                    <a href="{% url 'reservation:reservation_list' %}" class="btn btn-sm btn-outline-purple">
+                        Управление бронированиями <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+
     <div class="col-md-4 mb-3">
-            <div class="card h-100 stat-card bg-tables">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between">
-                        <div>
-                            <h5 class="card-title text-muted">Сотрудники</h5>
-                        </div>
-                        <div class="icon-stat bg-orange">
-                            <i class="bi bi-table fs-1 text-orange"></i>
-                        </div>
+        <div class="card h-100 stat-card bg-tables">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title text-muted">Количество столиков</h5>
+                        <h2 class="mb-0">{{ data.tables_count }}</h2>
                     </div>
-                    <div class="mt-3">
-                        <a href="{% url 'admin_page:employee_list' %}" class="btn btn-sm btn-outline-orange">
-                            Управление сотрудниками<i class="bi bi-arrow-right"></i>
-                        </a>
+                    <div class="icon-stat bg-orange">
+                        <i class="bi bi-table fs-1 text-orange"></i>
                     </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'reservation:table_list' %}" class="btn btn-sm btn-outline-orange">
+                        Управление столиками <i class="bi bi-arrow-right"></i>
+                    </a>
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 stat-card bg-users">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title text-muted">Количество пользователей</h5>
+                        <h2 class="mb-0">{{ data.users_count }}</h2>
+                    </div>
+                    <div class="icon-stat bg-teal">
+                        <i class="bi bi-people fs-1 text-teal"></i>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'users:user_list' %}" class="btn btn-sm btn-outline-teal">
+                        Управление пользователями <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <!-- Второй ряд -->
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 stat-card bg-employees">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title text-muted">Сотрудники</h5>
+                        <h2 class="mb-0">{{ data.employees_count }}</h2>
+                    </div>
+                    <div class="icon-stat bg-blue">
+                        <i class="bi bi-person-badge fs-1 text-blue"></i>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'admin_page:employee_list' %}" class="btn btn-sm btn-outline-blue">
+                        Управление сотрудниками <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="card h-100 stat-card bg-restaurant">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h5 class="card-title text-muted">Ресторан</h5>
+                        <h2 class="mb-0">{{ data.restaurants_count }}</h2>
+                    </div>
+                    <div class="icon-stat bg-red">
+                        <i class="bi bi-building fs-1 text-red"></i>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <a href="{% url 'admin_page:restaurant_detail' pk=1 %}" class="btn btn-sm btn-outline-red">
+                        Информация о ресторане <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
     <!-- Основной контент -->
     <div class="row">
         <!-- Последние бронирования -->
@@ -161,6 +186,9 @@
                         </a>
                          <a href="{% url 'admin_page:employee_create' %}" class="btn btn-outline-primary text-start">
                             <i class="bi bi-plus-square me-2"></i> Добавить сотрудника
+                        </a>
+                        <a href="{% url 'admin_page:restaurant_update' pk=1 %}" class="btn btn-outline-secondary text-start">
+                            <i class="bi bi-plus-square me-2"></i> Изменить информацию о ресторане
                         </a>
                     </div>
                 </div>

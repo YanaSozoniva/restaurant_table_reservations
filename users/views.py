@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserUpdateForm
@@ -89,3 +89,18 @@ class UserDelete(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
     template_name = "users/user_confirm_delete.html"
     success_url = reverse_lazy("user:user_list")
     permission_required = "users.delete_user"
+
+
+class BlockUsersView(LoginRequiredMixin, View):
+
+    def post(self, request, pk):
+        user = get_object_or_404(User, id=pk)
+
+        if user.is_active:
+            user.is_active = False
+        else:
+            user.is_active = True
+
+        user.save()
+
+        return redirect("users:user_list")

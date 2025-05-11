@@ -2,7 +2,7 @@ from django.urls import path
 
 from admin_page.apps import AdminConfig
 from admin_page.views import (AdminPageViews, EmployeeDetail, EmployeeUpdate, EmployeeDelete, EmployeeCreate,
-                              EmployeeList)
+                              EmployeeList, RestaurantDetail, RestaurantUpdate)
 
 app_name = AdminConfig.name
 
@@ -13,4 +13,6 @@ urlpatterns = [
     path("employee/create/", EmployeeCreate.as_view(), name="employee_create"),
     path("employee/<int:pk>/delete/", EmployeeDelete.as_view(), name="employee_delete"),
     path("employee/<int:pk>/update/", EmployeeUpdate.as_view(), name="employee_update"),
+    path("restaurant/<int:pk>/update/", RestaurantUpdate.as_view(), name="restaurant_update"),
+    path("restaurant/<int:pk>/", RestaurantDetail.as_view(), name="restaurant_detail"),
 ]

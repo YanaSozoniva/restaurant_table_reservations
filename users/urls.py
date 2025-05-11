@@ -3,7 +3,7 @@ from django.contrib.auth.views import (LoginView, LogoutView, PasswordResetCompl
 from django.urls import path, reverse_lazy
 
 from users.apps import UsersConfig
-from users.views import UserCreateViews, UserDelete, UserDetail, UserList, UserUpdateViews, email_verification
+from users.views import UserCreateViews, UserDelete, UserDetail, UserList, UserUpdateViews, email_verification, BlockUsersView
 
 app_name = UsersConfig.name
 
@@ -43,4 +43,5 @@ urlpatterns = [
     path("users/<int:pk>/delete", UserDelete.as_view(), name="user_delete"),
     path("users/<int:pk>/", UserDetail.as_view(), name="user_detail"),
     path("users/", UserList.as_view(), name="user_list"),
+    path("users/<int:pk>/block_user", BlockUsersView.as_view(), name="block_user"),
 ]

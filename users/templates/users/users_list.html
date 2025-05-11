@@ -7,9 +7,23 @@
         <li class="list-group-item">
             {{ user.id }}
             {{ user.email }}
-            <a href="{% url 'users:user_detail' user.pk %}" class="btn btn-primary">Подробнее</a>
-            <a href="{% url 'users:user_update' user.pk %}" class="btn btn-secondary">Редактировать</a>
-            <a href="{% url 'users:user_delete' user.pk %}" class="btn btn-danger">Удалить</a>
+           <div class="d-flex gap-2">
+    <a href="{% url 'users:user_detail' user.pk %}" class="btn btn-primary">Подробнее</a>
+
+    <form action="{% url 'users:block_user' user.pk %}" method="post" class="d-inline">
+        {% csrf_token %}
+        {% if user.is_active %}
+            <button type="submit" class="btn btn-warning">Заблокировать</button>
+        {% else %}
+            <button type="submit" class="btn btn-success">Разблокировать</button>
+        {% endif %}
+    </form>
+
+    <form action="{% url 'users:user_delete' user.pk %}" method="post" class="d-inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+</div>
         </li>
     {% endfor %}
 </ul>

@@ -1,16 +1,6 @@
+{% extends 'admin_page/base.html' %}
 {% load static %}
-
-<!doctype html>
-<html lang="ru">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Админка</title>
-    <link href="{% static '/css/bootstrap.min.css' %}" rel="stylesheet"/>
-
-</head>
-<body>
-{% include 'reservation/includes/top_menu.html' %}
+{% block content %}
  <section class="bg-light p-5 rounded mb-5">
         {% if object %}
              <h2 class="text-center mb-4">Редактирование</h2>
@@ -31,12 +21,11 @@
                  Сохранить
                 {% endif %}
              </button>
-            <a href="{% url 'reservation:employee_list' %}" class="btn btn-secondary">Отмена</a>
+            <a href="{% url 'admin_page:employee_list' %}" class="btn btn-secondary">Отмена</a>
 
                 </form>
             </div>
         </div>
     </section>
 
-</body>
-</html>
+{% endblock %}

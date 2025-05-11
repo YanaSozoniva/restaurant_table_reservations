@@ -26,7 +26,7 @@ class EmployeeCreate(LoginRequiredMixin, CreateView):
 
     model = Employee
     form_class = EmployeeForm
-    template_name = "admin/employee_form.html"
+    template_name = "admin_page/employee_form.html"
     success_url = reverse_lazy("admin_page:employee_list")
 
 
@@ -35,7 +35,7 @@ class EmployeeDelete(LoginRequiredMixin, DeleteView):
 
     model = Employee
     form_class = EmployeeForm
-    template_name = "admin/employee_delete.html"
+    template_name = "admin_page/employee_delete.html"
     success_url = reverse_lazy("admin_page:employee_list")
 
 
@@ -44,7 +44,7 @@ class EmployeeUpdate(LoginRequiredMixin, UpdateView):
 
     model = Employee
     form_class = EmployeeForm
-    template_name = "admin/employee_form.html"
+    template_name = "admin_page/employee_form.html"
     success_url = reverse_lazy("admin_page:employee_list")
 
 
@@ -52,5 +52,12 @@ class EmployeeDetail(DetailView):
     """Контроллер детализации сотрудников"""
 
     model = Employee
-    template_name = "admin/employee_detail.html"
+    template_name = "admin_page/employee_detail.html"
 
+
+class EmployeeList(ListView):
+    """Контроллер вывода списка столов"""
+
+    model = Employee
+    template_name = "admin_page/employee_list.html"
+    context_object_name = "employees"

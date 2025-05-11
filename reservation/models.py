@@ -89,7 +89,9 @@ class Restaurant(models.Model):
     name = models.CharField(max_length=200, verbose_name="Название ресторана")
     logo = models.ImageField(
         upload_to="photos/",
-        verbose_name="Логотип ресторана", blank=True, null=True,
+        verbose_name="Логотип ресторана",
+        blank=True,
+        null=True,
         validators=[FileSizeValidator(), ImageFormatValidator()],
     )
     story = models.TextField(verbose_name="История ресторана")

@@ -51,9 +51,9 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "reservation.context_processors.restaurant_data",
             ],
+            'file_charset': 'utf-8-sig',
         },
     },
-
 ]
 
 WSGI_APPLICATION = "config.wsgi.application"
@@ -65,10 +65,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("NAME"),
-        "USER": os.getenv("USER"),
-        "PASSWORD": os.getenv("PASSWORD"),
-        "HOST": os.getenv("HOST"),
+        "NAME": os.getenv("POSTGRES_DB"),
+        "USER": os.getenv("POSTGRES_USER"),
+        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
+        "HOST": os.getenv("POSTGRES_HOST", "db"),
         "PORT": os.getenv("PORT"),
     }
 }

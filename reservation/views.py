@@ -14,7 +14,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, T
 
 from config.settings import EMAIL_HOST_USER
 from reservation.forms import ContactForm, ReservationForm, TableForm
-from reservation.models import Reservation, Table, Restaurant, Employee
+from reservation.models import Employee, Reservation, Restaurant, Table
 from reservation.services import get_free_tables
 
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from reservation.models import Reservation, Table, Restaurant, Employee
+from reservation.models import Employee, Reservation, Restaurant, Table
 
 
 @admin.register(Reservation)

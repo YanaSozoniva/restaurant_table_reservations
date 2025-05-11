@@ -1,14 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse_lazy, reverse
-from django.views import View
-from django.views.generic import TemplateView, ListView, DeleteView, UpdateView, CreateView, DetailView
-from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse, reverse_lazy
+
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, TemplateView, UpdateView
 
 from reservation.forms import EmployeeForm, RestaurantForm
+from reservation.models import Employee, Restaurant
 from reservation.services import get_statistical_data
-from reservation.models import Restaurant, Employee
-from users.models import User
 
 
 class AdminPageViews(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):

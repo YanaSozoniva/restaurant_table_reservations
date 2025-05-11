@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
 from phonenumber_field.formfields import PhoneNumberField
 
-from reservation.models import Reservation, Table, Employee, Restaurant
+from reservation.models import Employee, Reservation, Restaurant, Table
 from users.forms import StyleFormMixin
 
 

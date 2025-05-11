@@ -1,8 +1,8 @@
 from django.urls import path
 
 from admin_page.apps import AdminConfig
-from admin_page.views import (AdminPageViews, EmployeeDetail, EmployeeUpdate, EmployeeDelete, EmployeeCreate,
-                              EmployeeList, RestaurantDetail, RestaurantUpdate)
+from admin_page.views import (AdminPageViews, EmployeeCreate, EmployeeDelete, EmployeeDetail, EmployeeList,
+                              EmployeeUpdate, RestaurantDetail, RestaurantUpdate)
 
 app_name = AdminConfig.name
 

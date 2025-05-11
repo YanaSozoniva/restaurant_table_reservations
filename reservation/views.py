@@ -14,11 +14,11 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, T
 
 from config.settings import EMAIL_HOST_USER
 from reservation.forms import ContactForm, ReservationForm, TableForm
-from reservation.models import Reservation, Table
+from reservation.models import Reservation, Table, Restaurant, Employee
 from reservation.services import get_free_tables
 
 
-@method_decorator(cache_page(60 * 3), name="dispatch")
+# @method_decorator(cache_page(60 * 3), name="dispatch")
 class HomeViews(TemplateView):
     """Контроллер для отображения главной страница сайта"""
 
@@ -29,6 +29,7 @@ class HomeViews(TemplateView):
         """Отправка формы в шаблон"""
         context = super().get_context_data(**kwargs)
         context["form"] = self.form_class()
+        context["restaurant"] = Restaurant.objects.get(id=1)
         return context
 
     def post(self, request, *args, **kwargs):
@@ -59,6 +60,13 @@ class AboutRestaurantViews(TemplateView):
     """Контроллер для отображения страница о ресторане"""
 
     template_name = "reservation/restaurant.html"
+
+    def get_context_data(self, **kwargs):
+        """Отправка формы в шаблон"""
+        context = super().get_context_data(**kwargs)
+        context["restaurant"] = Restaurant.objects.get(id=1)
+        context["employees"] = Employee.objects.all()
+        return context
 
 
 class ReservationCreate(LoginRequiredMixin, CreateView):

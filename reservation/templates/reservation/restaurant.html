@@ -1,10 +1,11 @@
 {% extends 'reservation/base.html' %}
 {% load static %}
+{% load my_tags %}
 {% block content %}
 <div class="container py-5">
     <!-- Заголовок страницы -->
     <div class="text-center mb-5">
-        <h1 class="display-4">О ресторане "Сладкая жизнь"</h1>
+        <h1 class="display-4">О ресторане {{ restaurant.name }}</h1>
         <p class="lead">Узнайте больше о нашем уютном уголке сладких удовольствий</p>
     </div>
 
@@ -16,9 +17,7 @@
                 <div class="p-4 rounded" style="background-color: rgba(255, 255, 255, 0.85);">
                     <h2 class="mb-4 display-5" style="color: #5a3921;">Наша история</h2>
                     <div class="lead" style="color: #5a3921;">
-                        <p>Ресторан "Сладкая жизнь" открыл свои двери в 2025 году с целью создать место, где каждый сможет ощутить настоящую магию десертов.</p>
-                        <p>Начав с маленькой кондитерской, мы выросли в полноценный ресторан, сохранив при этом домашнюю атмосферу и любовь к традициям.</p>
-                        <p>За эти годы мы разработали более 200 уникальных рецептов и стали любимым местом для ценителей изысканных сладостей.</p>
+                        <p>{{ restaurant.story }}</p>
                     </div>
                 </div>
             </div>
@@ -29,7 +28,7 @@
 
     <!-- Миссия и ценности -->
     <section class="bg-light p-5 rounded mb-5">
-        <h2 class="text-center mb-4">Миссия и ценности</h2>
+        <h2 class="text-center mb-4">Ценности</h2>
         <div class="row">
             <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 text-center p-3">
@@ -65,39 +64,19 @@
     <section class="mb-5">
         <h2 class="text-center mb-5">Наша команда</h2>
         <div class="row">
-            <!-- Шеф-повар -->
+            {% for employee in employees %}
             <div class="col-md-4 mb-4">
                 <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/chef.jpg' %}" class="card-img-top" alt="Шеф-повар">
+                     <img class="card-img-top" src="{{ employee.photo_employee | media_filter }}" alt="Card image cap">
                     <div class="card-body text-center">
-                        <h3 class="card-title">Анна Петрова</h3>
-                        <p class="text-muted">Шеф-кондитер</p>
-                        <p class="card-text">Автор уникальных рецептов, создает сладкие шедевры с 2018 года</p>
+                        <h3 class="card-title">{{ employee.name }}</h3>
+                        <p class="text-muted">{{ employee.job_title }}</p>
+                        <p class="card-text">{{ employee.description }}</p>
                     </div>
                 </div>
             </div>
-            <!-- Управляющий -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/manager.jpg' %}" class="card-img-top" alt="Управляющий">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Иван Сидоров</h3>
-                        <p class="text-muted">Управляющий</p>
-                        <p class="card-text">Создает неповторимую атмосферу и следит за безупречным сервисом</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Сомелье -->
-            <div class="col-md-4 mb-4">
-                <div class="card h-100 border-0 shadow-sm">
-                    <img src="{% static 'images/sommelier.jpg' %}" class="card-img-top" alt="Сомелье">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Елена Ковалева</h3>
-                        <p class="text-muted">Сомелье</p>
-                        <p class="card-text">Поможет подобрать идеальный напиток к вашему десерту</p>
-                    </div>
-                </div>
-            </div>
+
+             {% endfor %}
         </div>
     </section>
 </div>

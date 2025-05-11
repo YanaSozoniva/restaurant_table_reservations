@@ -94,6 +94,7 @@ class Restaurant(models.Model):
     )
     story = models.TextField(verbose_name="История ресторана")
     mission = models.TextField(verbose_name="Миссия")
+    description = models.TextField(verbose_name="Описание ресторана", null=True, blank=True)
 
     class Meta:
         verbose_name = "ресторан"

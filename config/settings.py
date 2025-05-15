@@ -53,7 +53,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "reservation.context_processors.restaurant_data",
             ],
-            'file_charset': 'utf-8-sig',
+            "file_charset": "utf-8-sig",
         },
     },
 ]

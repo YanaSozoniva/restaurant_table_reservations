@@ -1,8 +1,8 @@
 from datetime import timedelta
 
 from celery import shared_task
-from django.utils import timezone
 from django.core.mail import send_mail
+from django.utils import timezone
 
 from config import settings
 from reservation.models import Reservation
@@ -19,8 +19,12 @@ def send_email_about_reservation():
 
     for reservation in reservations:
         subject = f"Бронирование столика {reservation.table.table_number} в ресторане"
-        message = f"Вы забронировали столик на сегодня на {reservation.time_reservation} на {reservation.count_people} чел. Будем рады видеть Вас!"
-        send_mail(subject, message, settings.EMAIL_HOST_USER, reservation.customer.email)
+        message = (
+            f"Вы забронировали столик на сегодня на {reservation.time_reservation} на "
+            f"{reservation.count_people} чел. Будем рады видеть Вас!"
+        )
+        if reservation.customer.email:
+            send_mail(subject, message, settings.EMAIL_HOST_USER, reservation.customer.email)
         # если есть телеграмм
         # if reservation.customer.tg_name:
         #     send_telegram_message(reservation.customer.tg_name, message)

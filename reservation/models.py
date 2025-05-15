@@ -112,3 +112,7 @@ class Employee(models.Model):
     )
     job_title = models.CharField(max_length=200, verbose_name="Должность")
     description = models.TextField(verbose_name="Комментарии о сотруднике", null=True, blank=True)
+
+    class Meta:
+        verbose_name = "сотрудник"
+        verbose_name_plural = "сотрудники"

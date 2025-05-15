@@ -41,6 +41,27 @@ services:
       timeout: 5s
       retries: 5
 
+  celery:
+    build:
+      context: .
+    command: bash -c "celery -A config.celery worker -l INFO --pool=solo"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+
+  celery_beat:
+    build:
+      context: .
+    command: bash -c "celery -A config beat -l INFO -S django"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
+      - celery
+
 volumes:
   postgres_data:
   static_volume:

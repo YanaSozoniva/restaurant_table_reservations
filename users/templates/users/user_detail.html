@@ -12,10 +12,12 @@
                 <p>Телеграмм: {{ user.tg_name }}</p>
                 <p>Фамилия: {{ user.last_name }}</p>
                 <p>Имя: {{ user.first_name }}</p>
+                {% if not perms.users.can_change_content %}
                 <a href="{% url 'users:user_update' user.pk %}" class="btn btn-primary">Редактировать</a>
+                {% endif %}
                 <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary">История бронирования</a>
                 {% if perms.users.can_change_content %}
-                <a href="{% url 'reservation:table_list' %}" class="btn btn-primary">Вирнуться к списку</a>
+                <a href="{% url 'users:user_list' %}" class="btn btn-primary">Вирнуться к списку</a>
                 {% endif %}
             </div>
     </div>

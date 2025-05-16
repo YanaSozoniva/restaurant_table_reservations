@@ -1,0 +1,35 @@
+{% extends 'reservation/base.html' %}
+{% load my_tags %}
+{% block content %}
+
+<section class="bg-light p-5 rounded mb-5">
+    <div class="row justify-content-center">
+            <div class="col-lg-8">
+
+       <form class="row" method="post" enctype="multipart/form-data">
+           <div class="col-6">
+         <div class="card">
+            <div class="card-body">
+                 {% csrf_token %}
+                {{ form.as_p }}
+
+             </div>
+            <button type="submit" class="btn btn-primary">
+                {% if object %}
+                 Сохранить
+                 {% else %}
+                 Зарегестрироваться
+                {% endif %}
+             </button>
+         </div>
+  </div>
+
+    </form>
+
+  </div>
+
+ </div>
+
+    </section>
+
+{% endblock %}

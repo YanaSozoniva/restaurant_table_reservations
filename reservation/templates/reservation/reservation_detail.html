@@ -1,0 +1,58 @@
+{% extends 'reservation/base.html' %}
+{% load my_tags %}
+
+{% block title %}Информация по бронированию{% endblock %}
+
+{% block content %}
+<section class="bg-light p-5 rounded mb-5">
+    <h2 class="text-center mb-4">Информация по бронированию Стол №{{ reservation.table.table_number }}</h2>
+    <div class="row align-items-center">
+        <!-- Блок с информацией (левая колонка) -->
+        <div class="col-lg-6">
+            <div class="card border-0 bg-transparent">
+                <div class="card-body">
+                    <p class="fs-5"><i class="bi bi-calendar-check me-2"></i> Дата: {{ reservation.date_reservation|date:"d.m.Y" }}</p>
+                    <p class="fs-5"><i class="bi bi-clock me-2"></i> Время: {{ reservation.time_reservation|time:"H:i" }}</p>
+                    <p class="fs-5"><i class="bi bi-people me-2"></i> Гостей: {{ reservation.count_people }}</p>
+                    <p class="fs-5"><i class="bi bi-stopwatch me-2"></i> Продолжительность: {{ reservation.count_hours }} ч.</p>
+                    {% if reservation.wishes %}
+                    <p class="fs-5"><i class="bi bi-chat-left-text me-2"></i> Пожелания: {{ reservation.wishes }}</p>
+                    {% endif %}
+
+                    <div class="mt-4">
+                        <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary me-2">
+                            <i class="bi bi-list"></i> К списку бронирований
+                        </a>
+
+                        {% load tz %}
+                        {% now "Y-m-d" as current_date %}
+                        {% now "H:i" as current_time %}
+
+                        {% with reservation_date=reservation.date_reservation|date:"Y-m-d" %}
+                            {% if reservation_date > current_date or reservation_date == current_date and reservation.time_reservation|time:"H:i" > current_time|add:"1:00" %}
+                        <a href="{% url 'reservation:reservation_update' reservation.pk %}" class="btn btn-secondary">
+                            <i class="bi bi-list"></i> Редактировать
+                        </a>
+                        {% endif %}
+                        {% endwith %}
+                        <a href="{% url 'reservation:reservation_delete' reservation.pk %}" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> Удалить
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Блок с изображением (правая колонка) -->
+        <div class="col-lg-6 text-center">
+            <img src="{{ reservation.table.photo_table | media_filter }}"
+                 class="img-fluid rounded shadow-lg"
+                 alt="Стол №{{ reservation.table.table_number }}"
+                 style="max-height: 400px; object-fit: cover;">
+            <h3 class="mt-3 text-primary">Будем рады видеть Вас у нас!</h3>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

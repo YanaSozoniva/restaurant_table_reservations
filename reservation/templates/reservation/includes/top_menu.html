@@ -1,0 +1,60 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <!-- Логотип (опционально) -->
+       <a class="navbar-brand" href="{% url 'reservation:home' %}">
+            <img src="{{ restaurant_logo.url }}"
+                 alt="{{ restaurant_name }}"
+                 height="80"
+                 class="d-inline-block align-top me-2">
+            <span class="d-none d-sm-inline">Sweet Life</span>
+        </a>
+
+
+        <!-- Кнопка для мобильных -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Основное меню -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <!-- Центрированные ссылки -->
+            <ul class="navbar-nav mx-auto">  <!-- mx-auto выравнивает по центру -->
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:home' %}">Главная</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:restaurant' %}">О ресторане</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:reservation_create' %}">Бронирование</a></li>
+                <li class="btn btn-link nav"><a class="nav-link" href="{% url 'reservation:table_list' %}">Столики</a></li>
+            </ul>
+
+            <!-- Личный кабинет (справа) -->
+
+            <div class="d-flex ms-lg-auto">  <!-- ms-lg-auto сдвигает вправо -->
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <form method="post" action="{% url 'users:logout' %}" style="display: inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav">Выйти</button>
+                    </form>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:user_detail' user.pk %}">Профиль</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:login' %}">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-link nav" href="{% url 'users:register' %}">Регистрация</a>
+                </li>
+                {% endif %}
+                  <div class="d-flex ms-lg-auto">
+                {% if perms.users.can_change_content %}
+                <li class="nav-item">
+                      <a class="btn btn-link nav" href="{% url 'admin_page:admin_page' %}">Админ</a>
+                </li>
+                      {% endif %}
+            </div>
+        </div>
+    </div>
+        </div>
+</nav>

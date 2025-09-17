@@ -1,0 +1,85 @@
+<style>
+/* Оконтовка текста */
+     .text-outline {
+    text-shadow:
+      -1px -1px 0 #000,
+       1px -1px 0 #000,
+      -1px  1px 0 #000,
+       1px  1px 0 #000;
+  }
+  .text-outline-thick {
+    text-shadow:
+      -2px -2px 0 #000,
+       0px -2px 0 #000,
+       2px -2px 0 #000,
+      -2px  0px 0 #000,
+       2px  0px 0 #000,
+      -2px  2px 0 #000,
+       0px  2px 0 #000,
+       2px  2px 0 #000;
+  }
+
+  /* Стили галереи */
+    .gallery-item {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+    .gallery-item:hover {
+        transform: scale(1.03);
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(93, 64, 55, 0.8);
+        color: white;
+        padding: 10px;
+        transform: translateY(100%);
+        transition: transform 0.3s;
+        text-align: center;
+    }
+    .gallery-item:hover .overlay {
+        transform: translateY(0);
+    }
+    .bg-cover {
+        background-size: cover;
+    }
+    .object-fit-cover {
+        object-fit: cover;
+    }
+     /* анимация */
+    .card {
+    transition: transform 0.3s; /* Плавное изменение свойства transform в течение 0.3 секунды */
+    }
+    .card:hover {
+    transform: translateY(-10px); /* Сдвигает элемент на 10 пикселей вверх по оси Y */
+    }
+    /* таблица */
+    .table-option {
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+.table-option:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.table-option.selected {
+    border: 2px solid #0d6efd !important;
+    background-color: #f8f9fa;
+}
+.invalid-feedback {
+    display: none;
+    color: #dc3545;
+    font-size: 0.875em;
+}
+.is-invalid ~ .invalid-feedback,
+.is-invalid ~ .invalid-tooltip {
+    display: block;
+}
+.was-validated .form-control:invalid,
+.was-validated .form-select:invalid {
+    border-color: #dc3545;
+}
+</style>

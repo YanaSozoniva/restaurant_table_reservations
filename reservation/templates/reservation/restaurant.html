@@ -1,0 +1,84 @@
+{% extends 'reservation/base.html' %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+<div class="container py-5">
+    <!-- Заголовок страницы -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">О ресторане {{ restaurant.name }}</h1>
+        <p class="lead">Узнайте больше о нашем уютном уголке сладких удовольствий</p>
+    </div>
+
+    <!-- История ресторана -->
+<section class="py-5 mb-5" style="background-color: #d2b48c; background-image: url('{% static "images/wood-texture.jpg" %}'); background-size: cover;">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="p-4 rounded" style="background-color: rgba(255, 255, 255, 0.85);">
+                    <h2 class="mb-4 display-5" style="color: #5a3921;">Наша история</h2>
+                    <div class="lead" style="color: #5a3921;">
+                        <p>{{ restaurant.story }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Миссия и ценности -->
+    <section class="bg-light p-5 rounded mb-5">
+        <h2 class="text-center mb-4">Ценности</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-heart-fill text-danger fs-1 mb-3"></i>
+                        <h3>Качество</h3>
+                        <p>Мы используем только натуральные ингредиенты и готовим с любовью</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-star-fill text-warning fs-1 mb-3"></i>
+                        <h3>Традиции</h3>
+                        <p>Сохраняем рецепты, проверенные временем, и создаем новые шедевры</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 text-center p-3">
+                    <div class="card-body">
+                        <i class="bi bi-people-fill text-primary fs-1 mb-3"></i>
+                        <h3>Гостеприимство</h3>
+                        <p>Каждый гость для нас - особенный, мы создаем атмосферу тепла и уюта</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Команда -->
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Наша команда</h2>
+        <div class="row">
+            {% for employee in employees %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 border-0 shadow-sm">
+                     <img class="card-img-top" src="{{ employee.photo_employee | media_filter }}" alt="Card image cap">
+                    <div class="card-body text-center">
+                        <h3 class="card-title">{{ employee.name }}</h3>
+                        <p class="text-muted">{{ employee.job_title }}</p>
+                        <p class="card-text">{{ employee.description }}</p>
+                    </div>
+                </div>
+            </div>
+
+             {% endfor %}
+        </div>
+    </section>
+</div>
+
+{% endblock %}

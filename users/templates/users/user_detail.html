@@ -1,0 +1,26 @@
+{% extends 'reservation/base.html' %}
+{% load my_tags %}
+{% block title %} Личный кабинет{% endblock %}
+
+{% block content %}
+<section class="bg-light p-5 rounded mb-5">
+    <h2 class="text-center mb-4">Пользователь: {{ user.email }}</h2>
+    <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <img class="card-img-top" src="{{ user.avatar | media_filter }}" alt="Аватар">
+                <p>Телефон: {{ user.phone }}</p>
+                <p>Телеграмм: {{ user.tg_name }}</p>
+                <p>Фамилия: {{ user.last_name }}</p>
+                <p>Имя: {{ user.first_name }}</p>
+                {% if not perms.users.can_change_content %}
+                <a href="{% url 'users:user_update' user.pk %}" class="btn btn-primary">Редактировать</a>
+                {% endif %}
+                <a href="{% url 'reservation:reservation_list' %}" class="btn btn-primary">История бронирования</a>
+                {% if perms.users.can_change_content %}
+                <a href="{% url 'users:user_list' %}" class="btn btn-primary">Вирнуться к списку</a>
+                {% endif %}
+            </div>
+    </div>
+
+</section>
+{% endblock %}

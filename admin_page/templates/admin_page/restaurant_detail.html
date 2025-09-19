@@ -1,0 +1,22 @@
+{% extends 'admin_page/base.html' %}
+{% load my_tags %}
+{% block content %}
+<section class="bg-light p-5 rounded mb-5">
+     <div class="text-center">
+        <h2>Название: {{ restaurant.name }}</h2>
+    </div>
+     <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <p>Логотип</p>
+                <img class="card-img-top" src="{{ restaurant.logo | media_filter }}" alt="Card image cap"  style="max-width: 300px; height: auto;">
+                <p>История ресторана: {{ restaurant.story }}</p>
+                <p>Миссия: {{ restaurant.mission }} </p>
+
+                <a href="{% url 'admin_page:admin_page' %}" class="btn btn-primary">Назад</a>
+
+
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

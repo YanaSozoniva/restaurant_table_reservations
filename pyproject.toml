@@ -14,6 +14,13 @@ django = "^5.2"
 psycopg2-binary = "^2.9.10"
 python-dotenv = "^1.1.0"
 pillow = "^11.2.1"
+ipython = "^9.1.0"
+django-phonenumber-field = {extras = ["phonenumbers"], version = "^8.1.0"}
+redis = "^6.0.0"
+gunicorn = "^23.0.0"
+celery = "^5.5.2"
+eventlet = "^0.40.0"
+django-celery-beat = "^2.8.1"
 
 
 [build-system]

@@ -52,7 +52,6 @@ class Reservation(models.Model):
     customer = models.ForeignKey(
         User,
         verbose_name="Заказчик брони",
-        help_text="Укажите номер стола, который хотите забронировать",
         on_delete=models.SET_NULL,
         blank=True,
         null=True,

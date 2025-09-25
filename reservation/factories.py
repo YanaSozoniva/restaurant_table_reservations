@@ -27,7 +27,7 @@ class TableFactory(DjangoModelFactory):
     table_number = factory.Sequence(lambda n: n + 1)  # 1, 2, 3, 4...
     location = factory.Faker('sentence', nb_words=4, locale='ru_RU')  # "Стол у окна с видом"
     photo_table = factory.LazyFunction(create_dummy_image)  # Генерируем изображение при создании
-    table_capacity = factory.Faker('random_int', min=1, max=10)  # От 1 до 10 человек
+    table_capacity = factory.Faker('random_int', min=1, max=10)
 
 
 class UserFactory(DjangoModelFactory):

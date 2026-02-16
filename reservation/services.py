@@ -24,8 +24,9 @@ def get_free_tables(date_reservation, time_reservation):
 
     reserved_tables = []
     for reservation in reservations:
-        new_time = add_hours(reservation.time_reservation, reservation.count_hours + 1)
-        if time_reservation >= reservation.time_reservation and time_reservation < new_time:
+        new_time = add_hours(reservation.time_reservation, reservation.count_hours+1)
+
+        if (time_reservation >= reservation.time_reservation) or (time_reservation < new_time) or new_time >= time(00, 00):
             reserved_tables.append(reservation.table.id)
 
     available_tables = Table.objects.exclude(id__in=reserved_tables)
@@ -38,7 +39,7 @@ def get_statistical_data():
     context = {
         "reservations_count": Reservation.objects.count(),
         "tables_count": Table.objects.count(),
-        "users_count": User.objects.exclude(user_permissions__codename="can_change_content").count,
+        "users_count": User.objects.exclude(user_permissions__codename="can_change_content").count(),
         "recent_reservations": Reservation.objects.select_related("customer", "table").order_by(
             "-date_reservation", "-time_reservation"
         )[:10],

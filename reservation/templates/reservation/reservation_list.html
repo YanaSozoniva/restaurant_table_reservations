@@ -1,0 +1,46 @@
+{% extends 'reservation/base.html' %}
+
+{% block content %}
+<section class="bg-light p-5 rounded mb-5">
+    <h2 class="text-center mb-4">История бронирований</h2>
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            {% if reservations %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Кол-во гостей</th>
+                            <th>Столик</th>
+                            <th>Заказчик</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reservation in reservations %}
+                        <tr>
+                            <td>{{ reservation.date_reservation|date:"d.m.Y" }}</td>
+                            <td>{{ reservation.time_reservation|time:"H:i" }}</td>
+                            <td>{{ reservation.count_people }}</td>
+                            <td>№{{ reservation.table.table_number }}</td>
+                            {% if perms.users.can_change_content %}
+                            <td>№{{ reservation.customer.email }}</td>
+                            {% endif %}
+                            <td>
+                                <a href="{% url 'reservation:reservation_detail' reservation.pk %}" class="btn btn-sm btn-outline-primary">Подробнее</a>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="alert alert-info text-center">
+                У вас пока нет бронирований. <a href="{% url 'reservation:reservation_create' %}" class="alert-link">Забронировать столик</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
